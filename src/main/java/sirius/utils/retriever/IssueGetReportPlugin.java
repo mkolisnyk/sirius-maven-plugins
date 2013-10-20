@@ -6,13 +6,11 @@ package sirius.utils.retriever;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.plugin.logging.Log;
-import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;

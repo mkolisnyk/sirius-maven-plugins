@@ -4,14 +4,12 @@
 package sirius.utils.retriever;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import net.masterthought.cucumber.ReportBuilder;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.project.MavenProject;
