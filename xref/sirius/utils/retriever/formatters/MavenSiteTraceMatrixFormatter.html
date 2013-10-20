@@ -102,7 +102,7 @@
 <a class="jxr_linenumber" name="92" href="#92">92</a>              }
 <a class="jxr_linenumber" name="93" href="#93">93</a>          }        
 <a class="jxr_linenumber" name="94" href="#94">94</a>          output += <span class="jxr_string">"&lt;td&gt;&lt;a href=\&quot;"</span> + issue.getUrl() + <span class="jxr_string">"\&quot;&gt;"</span> + issue.getTitle() + <span class="jxr_string">"&lt;/td&gt;"</span> +
-<a class="jxr_linenumber" name="95" href="#95">95</a>              <span class="jxr_string">"&lt;td&gt;"</span>+ ((issue.getState().compareTo(GHIssueState.CLOSED) == 0)?(<span class="jxr_string">"Yes"</span>):(<span class="jxr_string">"No"</span>)) + <span class="jxr_string">"&lt;/td&gt;"</span>;
+<a class="jxr_linenumber" name="95" href="#95">95</a>              <span class="jxr_string">"&lt;td&gt;"</span>+ (issue.getState().compareTo(GHIssueState.CLOSED) == 0 ? <span class="jxr_string">"Yes"</span> : <span class="jxr_string">"No"</span> ) + <span class="jxr_string">"&lt;/td&gt;"</span>;
 <a class="jxr_linenumber" name="96" href="#96">96</a>          <strong class="jxr_keyword">if</strong>(user != <strong class="jxr_keyword">null</strong>){
 <a class="jxr_linenumber" name="97" href="#97">97</a>              <strong class="jxr_keyword">try</strong> {
 <a class="jxr_linenumber" name="98" href="#98">98</a>                  output += <span class="jxr_string">"&lt;td&gt;&lt;a href=\&quot;mailto://"</span> + user.getEmail()+ <span class="jxr_string">"\&quot;&gt;"</span> + user.getName() + <span class="jxr_string">"&lt;/a&gt;&lt;/td&gt;"</span> +
