@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.mkolisnyk</groupId>
 	<artifactId>sirius-maven-plugin</artifactId>
@@ -35,7 +36,7 @@
 		<tag>v1.0</tag>
 	</scm>
 	<issueManagement>
-		<system>GitHub issue tracker</system>
+		<system>GitHub</system>
 		<url>https://github.com/mkolisnyk/sirius-maven-plugins/issues</url>
 	</issueManagement>
 	<prerequisites>
@@ -124,16 +125,16 @@
 				</configuration>
 			</plugin>
 			<plugin>
-			 	<groupId>org.apache.maven.plugins</groupId>
-			 	<artifactId>maven-install-plugin</artifactId>
-			 	<version>2.3.1</version>
-			 	<configuration>			 		
-			 		<file>target/${project.artifactId}-${project.version}.jar</file>
-			 			<groupId>${project.groupId}</groupId>
-						<artifactId>${project.artifactId}</artifactId>
-						<version>${project.version}</version>
-						<packaging>maven-plugin</packaging>
-			 	</configuration>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-install-plugin</artifactId>
+				<version>2.3.1</version>
+				<configuration>
+					<file>target/${project.artifactId}-${project.version}.jar</file>
+					<groupId>${project.groupId}</groupId>
+					<artifactId>${project.artifactId}</artifactId>
+					<version>${project.version}</version>
+					<packaging>maven-plugin</packaging>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -202,47 +203,46 @@
 					<preparationGoals>package install:install-file</preparationGoals>
 				</configuration>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<version>3.0.1</version>
+			<plugin>
+				<groupId>com.github.danielflower.mavenplugins</groupId>
+				<artifactId>maven-gitlog-plugin</artifactId>
+				<version>1.5.0</version>
 				<configuration>
-					<excludes>
-						<exclude>**/plugin/**/*.java</exclude>
-					</excludes>
-					<excludeRoots>
-						<excludeRoot>target/generated-sources</excludeRoot>
-					</excludeRoots>
+					<reportTitle>Changelog for ${project.name} version
+						${project.version}</reportTitle>
+					<verbose>true</verbose>
+					<outputDirectory>target/site/changelog</outputDirectory>
+					<generatePlainTextChangeLog>true</generatePlainTextChangeLog>
+					<plainTextChangeLogFilename>changelog-${project.version}.txt</plainTextChangeLogFilename>
+					<generateSimpleHTMLChangeLog>true</generateSimpleHTMLChangeLog>
+					<markdownChangeLogFilename>changelog-${project.version}.md</markdownChangeLogFilename>
+					<generateMarkdownChangeLog>true</generateMarkdownChangeLog>
+					<simpleHTMLChangeLogFilename>changelog.html</simpleHTMLChangeLogFilename>
+					<generateHTMLTableOnlyChangeLog>true</generateHTMLTableOnlyChangeLog>
+					<htmlTableOnlyChangeLogFilename>changelog-tableonly.html</htmlTableOnlyChangeLogFilename>
+					<issueManagementSystem>GitHub issue tracker</issueManagementSystem>
+					<issueManagementUrl>https://github.com/mkolisnyk/sirius-maven-plugins/issues</issueManagementUrl>
+					<fullGitMessage>true</fullGitMessage>
+					<dateFormat>yyyy-MM-dd HH:mm:ss Z</dateFormat>
 				</configuration>
 				<executions>
 					<execution>
 						<goals>
-							<goal>check</goal>
-							<goal>cpd-check</goal>
+							<goal>generate</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.9.1</version>
-				<configuration>
-					<excludes>
-						<exclude>**/plugin/**/*.java</exclude>
-					</excludes>
-					<excludeRoots>
-						<excludeRoot>target/generated-sources</excludeRoot>
-					</excludeRoots>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>check</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>-->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-pmd-plugin</artifactId> 
+				<version>3.0.1</version> <configuration> <excludes> <exclude>**/plugin/**/*.java</exclude> 
+				</excludes> <excludeRoots> <excludeRoot>target/generated-sources</excludeRoot> 
+				</excludeRoots> </configuration> <executions> <execution> <goals> <goal>check</goal> 
+				<goal>cpd-check</goal> </goals> </execution> </executions> </plugin> <plugin> 
+				<groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId> 
+				<version>2.9.1</version> <configuration> <excludes> <exclude>**/plugin/**/*.java</exclude> 
+				</excludes> <excludeRoots> <excludeRoot>target/generated-sources</excludeRoot> 
+				</excludeRoots> </configuration> <executions> <execution> <goals> <goal>check</goal> 
+				</goals> </execution> </executions> </plugin> -->
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -331,19 +331,10 @@
 	</dependencies>
 	<reporting>
 		<plugins>
-			<!--<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<version>2.9.1</version>
-				<configuration>
-					<excludes>
-						<exclude>**/plugin/**/*.java</exclude>
-					</excludes>
-					<excludeRoots>
-						<excludeRoot>target/generated-sources</excludeRoot>
-					</excludeRoots>
-				</configuration>
-			</plugin>-->
+			<!--<plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId> 
+				<version>2.9.1</version> <configuration> <excludes> <exclude>**/plugin/**/*.java</exclude> 
+				</excludes> <excludeRoots> <excludeRoot>target/generated-sources</excludeRoot> 
+				</excludeRoots> </configuration> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>
