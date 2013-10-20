@@ -56,8 +56,8 @@ public class TraceabilityMatrixFormatter implements IStoryFormatter {
                 + "]("
                 + issue.getUrl()
                 + ") | "
-                + ((issue.getState().equals(GHIssueState.CLOSED)) ? ("Yes")
-                        : ("No")) + "|";
+                + (issue.getState().equals(GHIssueState.CLOSED) ? "Yes"
+                        : "No") + "|";
     }
 
     /*

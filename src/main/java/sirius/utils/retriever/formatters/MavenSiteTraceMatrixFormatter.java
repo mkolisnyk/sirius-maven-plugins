@@ -92,7 +92,7 @@ public class MavenSiteTraceMatrixFormatter implements IStoryFormatter {
             }
         }        
         output += "<td><a href=\"" + issue.getUrl() + "\">" + issue.getTitle() + "</td>" +
-            "<td>"+ ((issue.getState().compareTo(GHIssueState.CLOSED) == 0)?("Yes"):("No")) + "</td>";
+            "<td>"+ (issue.getState().compareTo(GHIssueState.CLOSED) == 0 ? "Yes" : "No" ) + "</td>";
         if(user != null){
             try {
                 output += "<td><a href=\"mailto://" + user.getEmail()+ "\">" + user.getName() + "</a></td>" +

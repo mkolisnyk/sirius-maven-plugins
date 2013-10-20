@@ -34,7 +34,26 @@
 		<url>https://github.com/mkolisnyk/sirius-maven-plugins.git</url>
 		<tag>v1.0</tag>
 	</scm>
-
+	<issueManagement>
+		<system>GitHub issue tracker</system>
+		<url>https://github.com/mkolisnyk/sirius-maven-plugins/issues</url>
+	</issueManagement>
+	<prerequisites>
+		<maven>2.0</maven>
+	</prerequisites>
+	<inceptionYear>2013</inceptionYear>
+	<ciManagement>
+		<notifiers>
+			<notifier>
+				<address>kolesnik.nickolay@gmail.com</address>
+				<sendOnError>true</sendOnError>
+				<sendOnSuccess>false</sendOnSuccess>
+				<type>mail</type>
+			</notifier>
+		</notifiers>
+		<system>Travis</system>
+		<url>https://travis-ci.org/mkolisnyk/sirius-maven-plugins/builds</url>
+	</ciManagement>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<testSourceDirectory>src/test/java</testSourceDirectory>
@@ -61,6 +80,7 @@
 					<message>Creating site for ${project.version}</message>
 					<oauth2Token>6cbcb8e3d8031bdd0637256be9da89c57ea26949</oauth2Token>
 					<repositoryName>sirius-maven-plugins</repositoryName>
+					<repositoryOwner>mkolisnyk</repositoryOwner>
 				</configuration>
 				<executions>
 					<execution>
@@ -311,7 +331,7 @@
 	</dependencies>
 	<reporting>
 		<plugins>
-			<plugin>
+			<!--<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-checkstyle-plugin</artifactId>
 				<version>2.9.1</version>
@@ -323,7 +343,7 @@
 						<excludeRoot>target/generated-sources</excludeRoot>
 					</excludeRoots>
 				</configuration>
-			</plugin>
+			</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-pmd-plugin</artifactId>

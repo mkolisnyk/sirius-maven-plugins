@@ -13,15 +13,15 @@ import org.kohsuke.github.GHMilestone;
  * 
  */
 public interface IStoryFormatter {
-    public String GetFooter(ArrayList<GHIssue> issues);
+    String GetFooter(ArrayList<GHIssue> issues);
 
-    public String GetHeader(ArrayList<GHIssue> issues);
+    String GetHeader(ArrayList<GHIssue> issues);
 
-    public String GetIssue(GHIssue issue);
+    String GetIssue(GHIssue issue);
 
-    public String GetLabels(GHIssue issue);
+    String GetLabels(GHIssue issue);
 
-    public String GetMilestone(GHMilestone milestone);
+    String GetMilestone(GHMilestone milestone);
 
-    public void Out(String text);
+    void Out(String text);
 }
