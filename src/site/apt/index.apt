@@ -1,12 +1,19 @@
 Introduction
 
-  This plugin provides multiple reporting functionality to generate various reports
+  This plugin provides functionality to generate different reports like:
+  * Github Wiki Traceability Matrix - the report in GitHub wiki markdown format displaying correspondence between requirements (user stories/milestones) and associated issues (tickets)
+  * Maven formatted Traceability Matrix - the Maven reporting goal generating traceability matrix as the part of Maven <<site>> phase.
+  * Cucumber report - the extension of {{{https://github.com/masterthought/maven-cucumber-reporting-mojo}maven-cucumber-reporting-mojo}} plugin which generates Cucumber report as the part of Maven site generation 
 
 Author
 
   Myk Kolisnyk
 
-YYYY-MM-DD
+Build Status
+
+[https://api.travis-ci.org/mkolisnyk/sirius-maven-plugins.png]
+
+  {{{https://travis-ci.org/mkolisnyk/sirius-maven-plugins}View build congifuration}}
  
 ~~ Licensed to the Apache Software Foundation (ASF) under one
 ~~ or more contributor license agreements.  See the NOTICE file
@@ -29,7 +36,7 @@ YYYY-MM-DD
 ~~ http://maven.apache.org/doxia/references/apt-format.html
  
  
-Maven Plugin Name
+Sirius-Maven-Plugins
  
   Plugin introduction, description, and other relevant information.
  
