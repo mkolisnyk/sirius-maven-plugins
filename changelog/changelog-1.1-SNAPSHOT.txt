@@ -1,6 +1,7 @@
 Changelog for sirius-maven-plugin version
 						1.1-SNAPSHOT
 
+2013-10-27 17:27:02 +0000    Small updates to the documentation index and pom.xml file (mkolisnyk)
 2013-10-20 20:28:35 +0000    Updates to site generation: broken links were fixed. Changelog report
 was added (mkolisnyk)
 2013-10-20 19:34:14 +0000    PMD errors were removed. Site reporting error fixes (mkolisnyk)
