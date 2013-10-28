@@ -3,28 +3,38 @@
  */
 package sirius.utils.retriever;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Locale;
 
+import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.doxia.siterenderer.Renderer;
+import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
 
+import sirius.utils.retriever.types.usage.CucumberStepSource;
+
+import com.cedarsoftware.util.io.JsonReader;
+
 /**
  * @author Myk Kolisnyk
- *
+ * 
  */
 public class CucumberUsageReportingPlugin extends AbstractMavenReport {
 
     /**
      * Directory where reports will go.
-     *
+     * 
      * @parameter expression="${project.reporting.outputDirectory}"
      * @required
      * @readonly
      */
-    private String outputDirectory;
- 
+    private String       outputDirectory;
+
     /**
      * @parameter default-value="${project}"
      * @required
@@ -37,24 +47,29 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
      * @required
      * @readonly
      */
-    private Renderer siteRenderer;
-    
+    private Renderer     siteRenderer;
+
     /**
      * @parameter
      * @required
      * @readonly
      */
-    private String jsonFile;
-    
-    /* (non-Javadoc)
-     * @see org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
+    private String       jsonFile;
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.apache.maven.reporting.MavenReport#getDescription(java.util.Locale)
      */
     @Override
     public String getDescription(Locale arg0) {
         return "HTML formatted Cucumber keywords usage report";
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.maven.reporting.MavenReport#getName(java.util.Locale)
      */
     @Override
@@ -62,7 +77,9 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         return "Cucumber usage report";
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.maven.reporting.MavenReport#getOutputName()
      */
     @Override
@@ -70,7 +87,9 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         return "cucumber-usage-report";
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.maven.reporting.AbstractMavenReport#getOutputDirectory()
      */
     @Override
@@ -78,7 +97,9 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         return this.outputDirectory;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.maven.reporting.AbstractMavenReport#getProject()
      */
     @Override
@@ -86,7 +107,9 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         return this.project;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     * 
      * @see org.apache.maven.reporting.AbstractMavenReport#getSiteRenderer()
      */
     @Override
@@ -102,38 +125,146 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
     }
 
     /**
-     * @param jsonFile the jsonFile to set
+     * @param jsonFile
+     *            the jsonFile to set
      */
     public void setJsonFile(String jsonFile) {
         this.jsonFile = jsonFile;
     }
 
     /**
-     * @param outputDirectory the outputDirectory to set
+     * @param outputDirectory
+     *            the outputDirectory to set
      */
     public void setOutputDirectory(String outputDirectory) {
         this.outputDirectory = outputDirectory;
     }
 
     /**
-     * @param project the project to set
+     * @param project
+     *            the project to set
      */
     public void setProject(MavenProject project) {
         this.project = project;
     }
 
     /**
-     * @param siteRenderer the siteRenderer to set
+     * @param siteRenderer
+     *            the siteRenderer to set
      */
     public void setSiteRenderer(Renderer siteRenderer) {
         this.siteRenderer = siteRenderer;
     }
 
-    /* (non-Javadoc)
-     * @see org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util.Locale)
+    /**
+     * .
+     * @param sink .
+     * @param sources .
+     */
+    protected void generateUsageOverviewGraphReport(Sink sink, CucumberStepSource[] sources){
+        ;
+    }
+    
+    /**
+     * .
+     * @param sink .
+     * @param sources .
+     */
+    protected void generateUsageOverviewTableReport(Sink sink, CucumberStepSource[] sources){
+        ;
+    }
+    
+    /**
+     * .
+     * @param sink .
+     * @param sources .
+     */
+    protected void generateUsageDetailedReport(Sink sink, CucumberStepSource[] sources){
+        ;
+    }
+    
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.apache.maven.reporting.AbstractMavenReport#executeReport(java.util
+     * .Locale)
      */
     @Override
     protected void executeReport(Locale arg0) throws MavenReportException {
-        ;
+        FileInputStream fis = null;
+        JsonReader jr = null;
+        try {
+            Log logger = this.getLog();
+
+            logger.debug("Looking for the file '" + jsonFile + "'");
+            File file = new File(jsonFile);
+
+            if (!(file.exists() && file.isFile())) {
+                logger.error("The file '" + jsonFile
+                        + "' either doesn't exist or not a file.");
+                throw new FileNotFoundException();
+            }
+
+            fis = new FileInputStream(file);
+            jr = new JsonReader(fis);
+            CucumberStepSource[] sources = (CucumberStepSource[]) jr
+                    .readObject();
+            
+            Sink sink = getSink();
+            sink.head();
+            sink.title();
+            sink.text("Cucumber Steps Usage Report");
+            sink.title_();
+            sink.head_();
+         
+            sink.body();
+            sink.section1();
+            sink.sectionTitle1();
+            sink.text("Usage Statistics");
+            sink.sectionTitle1_();
+            
+            sink.section2();
+            sink.sectionTitle2();
+            sink.text("Overview Graph");
+            sink.sectionTitle2_();
+            sink.paragraph();
+            generateUsageOverviewGraphReport(sink,sources);
+            sink.paragraph_();
+            sink.section2_();
+            
+            sink.section2();
+            sink.sectionTitle2();
+            sink.text("Overview Table");
+            sink.sectionTitle2_();
+            sink.paragraph();
+            generateUsageOverviewTableReport(sink,sources);
+            sink.paragraph_();
+            sink.section2_();
+
+            sink.section1();
+            sink.sectionTitle1();
+            sink.text("Usage Detailed Information");
+            sink.sectionTitle1_();
+            sink.paragraph();
+            generateUsageDetailedReport(sink,sources);
+            sink.paragraph_();
+            sink.section1_();
+            
+        } catch (Exception e) {
+            throw new MavenReportException(
+                    "Error occured while generating Cucumber usage report", e);
+        } finally {
+            if (fis != null) {
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (jr != null) {
+                jr.close();
+            }
+        }
     }
 }
