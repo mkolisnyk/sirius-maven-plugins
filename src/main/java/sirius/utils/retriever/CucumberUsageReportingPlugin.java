@@ -7,7 +7,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.doxia.siterenderer.Renderer;
@@ -18,6 +20,7 @@ import org.apache.maven.reporting.MavenReportException;
 
 import sirius.utils.retriever.types.usage.CucumberStepSource;
 
+import com.cedarsoftware.util.io.JsonObject;
 import com.cedarsoftware.util.io.JsonReader;
 
 /**
@@ -183,6 +186,34 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         ;
     }
     
+    public CucumberStepSource[] getStepSources(String filePath) throws Exception{
+        FileInputStream fis = null;
+        JsonReader jr = null;
+        Log logger = this.getLog();
+
+        logger.debug("Looking for the file '" + filePath + "'");
+        File file = new File(filePath);
+
+        if (!(file.exists() && file.isFile())) {
+            logger.error("The file '" + filePath
+                    + "' either doesn't exist or not a file.");
+            throw new FileNotFoundException();
+        }
+
+        fis = new FileInputStream(file);
+        jr = new JsonReader(fis,true);
+        JsonObject<String,Object> source = (JsonObject<String,Object>)jr.readObject();
+        Object[] objs = (Object[])source.get("@items");
+        
+        CucumberStepSource[] sources = new CucumberStepSource[objs.length];
+        for(int i=0;i<objs.length;i++){
+            sources[i] = new CucumberStepSource((JsonObject<String,Object>)objs[i]);
+        }
+        jr.close();
+        fis.close();
+        return sources;
+    }
+    
     /*
      * (non-Javadoc)
      * 
@@ -192,24 +223,9 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
      */
     @Override
     protected void executeReport(Locale arg0) throws MavenReportException {
-        FileInputStream fis = null;
-        JsonReader jr = null;
         try {
-            Log logger = this.getLog();
-
-            logger.debug("Looking for the file '" + jsonFile + "'");
-            File file = new File(jsonFile);
-
-            if (!(file.exists() && file.isFile())) {
-                logger.error("The file '" + jsonFile
-                        + "' either doesn't exist or not a file.");
-                throw new FileNotFoundException();
-            }
-
-            fis = new FileInputStream(file);
-            jr = new JsonReader(fis);
-            CucumberStepSource[] sources = (CucumberStepSource[]) jr
-                    .readObject();
+            
+            CucumberStepSource[] sources = getStepSources(jsonFile);
             
             Sink sink = getSink();
             sink.head();
@@ -254,17 +270,6 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         } catch (Exception e) {
             throw new MavenReportException(
                     "Error occured while generating Cucumber usage report", e);
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (jr != null) {
-                jr.close();
-            }
         }
     }
 }

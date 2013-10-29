@@ -3,6 +3,8 @@
  */
 package sirius.utils.retriever.types.usage;
 
+import com.cedarsoftware.util.io.JsonObject;
+
 /**
  * @author Myk Kolisnyk
  *
@@ -33,5 +35,19 @@ public class CucumberStepDuration {
      */
     public void setLocation(String location) {
         this.location = location;
+    }
+    /**
+     * @param duration
+     * @param location
+     */
+    public CucumberStepDuration(Double duration, String location) {
+        super();
+        this.duration = duration;
+        this.location = location;
+    }
+    
+    public CucumberStepDuration(JsonObject<String, Object> json){
+        this.duration = (Double)json.get("duration");
+        this.location = (String)json.get("location");
     }
 }

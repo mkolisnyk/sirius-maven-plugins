@@ -3,6 +3,8 @@
  */
 package sirius.utils.retriever.types.usage;
 
+import com.cedarsoftware.util.io.JsonObject;
+
 /**
  * @author Myk Kolisnyk
  *
@@ -39,5 +41,19 @@ public class CucumberAggregatedDuration {
      */
     public void setMedian(Double median) {
         this.median = median;
+    }
+    /**
+     * @param average
+     * @param median
+     */
+    public CucumberAggregatedDuration(Double average, Double median) {
+        super();
+        this.average = average;
+        this.median = median;
+    }
+    
+    public CucumberAggregatedDuration(JsonObject<String, Object> json){
+        this.average = (Double)json.get("average");
+        this.median = (Double)json.get("median");
     }
 }

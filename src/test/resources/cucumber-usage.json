@@ -1,0 +1,1034 @@
+[
+  {
+    "source": "^I write the \"([^\"]*)\" text into \"([^\"]*)\" file$",
+    "steps": [
+      {
+        "name": "I write the \"test line\" text into \"./Test.txt\" file",
+        "aggregatedDurations": {
+          "median": 0.002314819,
+          "average": 0.002314819
+        },
+        "durations": [
+          {
+            "duration": 0.002314819,
+            "location": "System_Filecontentbasicmanipulation.feature:41"
+          }
+        ]
+      },
+      {
+        "name": "I write the \"test line 2\" text into \"./Test.txt\" file",
+        "aggregatedDurations": {
+          "median": 0.000864914,
+          "average": 0.000864914
+        },
+        "durations": [
+          {
+            "duration": 0.000864914,
+            "location": "System_Filecontentbasicmanipulation.feature:46"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the \"([^\"]*)\" file already exists$",
+    "steps": [
+      {
+        "name": "the \"./Test.txt\" file already exists",
+        "aggregatedDurations": {
+          "median": 0.000224225,
+          "average": 0.000224225
+        },
+        "durations": [
+          {
+            "duration": 0.000223562,
+            "location": "System_Filebaseoperations.feature:41"
+          },
+          {
+            "duration": 0.000224889,
+            "location": "System_Filebaseoperations.feature:61"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the \"([^\"]*)\" file doesn\u0027t exist$",
+    "steps": [
+      {
+        "name": "the \"./Test.txt\" file doesn\u0027t exist",
+        "aggregatedDurations": {
+          "median": 0.001506756,
+          "average": 0.001262101
+        },
+        "durations": [
+          {
+            "duration": 0.001506756,
+            "location": "System_Filebaseoperations.feature:25"
+          },
+          {
+            "duration": 0.000265816,
+            "location": "System_Filecontentbasicmanipulation.feature:25"
+          },
+          {
+            "duration": 0.001573385,
+            "location": "System_Filecontentbasicmanipulation.feature:40"
+          },
+          {
+            "duration": 0.001779765,
+            "location": "System_Filecontentbasicmanipulation.feature:55"
+          },
+          {
+            "duration": 0.001184787,
+            "location": "System_Filecontentbasicmanipulation.feature:87"
+          }
+        ]
+      },
+      {
+        "name": "the \"./T e s t.txt\" file doesn\u0027t exist",
+        "aggregatedDurations": {
+          "median": 0.001361067,
+          "average": 0.001361067
+        },
+        "durations": [
+          {
+            "duration": 0.001361067,
+            "location": "System_Filebaseoperations.feature:25"
+          }
+        ]
+      },
+      {
+        "name": "the \"./Test1/Test.txt\" file doesn\u0027t exist",
+        "aggregatedDurations": {
+          "median": 0.000226076,
+          "average": 0.000226076
+        },
+        "durations": [
+          {
+            "duration": 0.000226076,
+            "location": "System_Filebaseoperations.feature:25"
+          }
+        ]
+      },
+      {
+        "name": "the \"./T@#%^^..\" file doesn\u0027t exist",
+        "aggregatedDurations": {
+          "median": 0.000220908,
+          "average": 0.000220908
+        },
+        "durations": [
+          {
+            "duration": 0.000220908,
+            "location": "System_Filebaseoperations.feature:25"
+          }
+        ]
+      },
+      {
+        "name": "the \"a:\\Test.txt\" file doesn\u0027t exist",
+        "aggregatedDurations": {
+          "median": 0.000226006,
+          "average": 0.000226006
+        },
+        "durations": [
+          {
+            "duration": 0.000226006,
+            "location": "System_Filebaseoperations.feature:25"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I append the \"([^\"]*)\" file with the \"([^\"]*)\" text$",
+    "steps": [
+      {
+        "name": "I append the \"./Test.txt\" file with the \"test line\" text",
+        "aggregatedDurations": {
+          "median": 0.002197521,
+          "average": 0.002197521
+        },
+        "durations": [
+          {
+            "duration": 0.003020845,
+            "location": "System_Filecontentbasicmanipulation.feature:26"
+          },
+          {
+            "duration": 0.001374197,
+            "location": "System_Filecontentbasicmanipulation.feature:88"
+          }
+        ]
+      },
+      {
+        "name": "I append the \"./Test.txt\" file with the \"test line 2\" text",
+        "aggregatedDurations": {
+          "median": 0.000801988,
+          "average": 0.000801988
+        },
+        "durations": [
+          {
+            "duration": 0.000801988,
+            "location": "System_Filecontentbasicmanipulation.feature:31"
+          }
+        ]
+      },
+      {
+        "name": "I append the \"./Test.txt\" file with the \"test line2\" text",
+        "aggregatedDurations": {
+          "median": 0.00085807,
+          "average": 0.00085807
+        },
+        "durations": [
+          {
+            "duration": 0.00085807,
+            "location": "System_Filecontentbasicmanipulation.feature:90"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I create the \"([^\"]*)\" folder \\(without overwrite\\)$",
+    "steps": [
+      {
+        "name": "I create the \"./Test/test1\" folder (without overwrite)",
+        "aggregatedDurations": {
+          "median": 0.00014953,
+          "average": 0.00014953
+        },
+        "durations": [
+          {
+            "duration": 0.00014953,
+            "location": "System_Directorybaseoperations.feature:45"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^(?:I should see |)the \"([^\"]*)\" folder is missing$",
+    "steps": [
+      {
+        "name": "the \"./Test1\" folder is missing",
+        "aggregatedDurations": {
+          "median": 0.000175162,
+          "average": 0.000175162
+        },
+        "durations": [
+          {
+            "duration": 0.000175162,
+            "location": "System_Directorybaseoperations.feature:23"
+          }
+        ]
+      },
+      {
+        "name": "the \".,Test/test1/test2\" folder is missing",
+        "aggregatedDurations": {
+          "median": 0.000117543,
+          "average": 0.000117543
+        },
+        "durations": [
+          {
+            "duration": 0.000117543,
+            "location": "System_Directorybaseoperations.feature:43"
+          }
+        ]
+      },
+      {
+        "name": "I should see the \"./Test\" folder is missing",
+        "aggregatedDurations": {
+          "median": 0.000149495,
+          "average": 0.000149495
+        },
+        "durations": [
+          {
+            "duration": 0.000150019,
+            "location": "System_Directorybaseoperations.feature:66"
+          },
+          {
+            "duration": 0.000148971,
+            "location": "System_Directorybaseoperations.feature:75"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I should see the first (\\d+) lines of the \"([^\"]*)\" file are:$",
+    "steps": [
+      {
+        "name": "I should see the first 3 lines of the \"./Test.txt\" file are:",
+        "aggregatedDurations": {
+          "median": 0.000656438,
+          "average": 0.000656438
+        },
+        "durations": [
+          {
+            "duration": 0.000656438,
+            "location": "System_Filecontentbasicmanipulation.feature:63"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I create the \"([^\"]*)\" file$",
+    "steps": [
+      {
+        "name": "I create the \"./Test.txt\" file",
+        "aggregatedDurations": {
+          "median": 0.000830727,
+          "average": 0.000830727
+        },
+        "durations": [
+          {
+            "duration": 0.001484407,
+            "location": "System_Filebaseoperations.feature:27"
+          },
+          {
+            "duration": 0.000177048,
+            "location": "System_Filebaseoperations.feature:45"
+          }
+        ]
+      },
+      {
+        "name": "I create the \"./T e s t.txt\" file",
+        "aggregatedDurations": {
+          "median": 0.001083308,
+          "average": 0.001083308
+        },
+        "durations": [
+          {
+            "duration": 0.001083308,
+            "location": "System_Filebaseoperations.feature:27"
+          }
+        ]
+      },
+      {
+        "name": "I create the \"./Test1/Test.txt\" file",
+        "aggregatedDurations": {
+          "median": 0.001392636,
+          "average": 0.001392636
+        },
+        "durations": [
+          {
+            "duration": 0.001392636,
+            "location": "System_Filebaseoperations.feature:27"
+          }
+        ]
+      },
+      {
+        "name": "I create the \"./T@#%^^..\" file",
+        "aggregatedDurations": {
+          "median": 0.000111047,
+          "average": 0.000111047
+        },
+        "durations": [
+          {
+            "duration": 0.000111047,
+            "location": "System_Filebaseoperations.feature:27"
+          }
+        ]
+      },
+      {
+        "name": "I create the \"a:\\Test.txt\" file",
+        "aggregatedDurations": {
+          "median": 0.018108168,
+          "average": 0.018108168
+        },
+        "durations": [
+          {
+            "duration": 0.018108168,
+            "location": "System_Filebaseoperations.feature:27"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the lines from (\\d+) to (\\d+) of the \"([^\"]*)\" file are:$",
+    "steps": [
+      {
+        "name": "the lines from 2 to 4 of the \"./Test.txt\" file are:",
+        "aggregatedDurations": {
+          "median": 0.000575283,
+          "average": 0.000575283
+        },
+        "durations": [
+          {
+            "duration": 0.000575283,
+            "location": "System_Filecontentbasicmanipulation.feature:78"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^(?:I should see |)the \"([^\"]*)\" file content is:$",
+    "steps": [
+      {
+        "name": "I should see the \"./Test.txt\" file content is:",
+        "aggregatedDurations": {
+          "median": 0.000597632,
+          "average": 0.000740992
+        },
+        "durations": [
+          {
+            "duration": 0.000597632,
+            "location": "System_Filebaseoperations.feature:46"
+          },
+          {
+            "duration": 0.000516965,
+            "location": "System_Filecontentbasicmanipulation.feature:32"
+          },
+          {
+            "duration": 0.001108381,
+            "location": "System_Filecontentbasicmanipulation.feature:47"
+          }
+        ]
+      },
+      {
+        "name": "the \"./Test.txt\" file content is:",
+        "aggregatedDurations": {
+          "median": 0.000614638,
+          "average": 0.000614638
+        },
+        "durations": [
+          {
+            "duration": 0.000542667,
+            "location": "System_Filecontentbasicmanipulation.feature:28"
+          },
+          {
+            "duration": 0.000686609,
+            "location": "System_Filecontentbasicmanipulation.feature:43"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I move the \"([^\"]*)\" folder to the \"([^\"]*)\" path$",
+    "steps": [
+      {
+        "name": "I move the \"./Test\" folder to the \"./Test1\" path",
+        "aggregatedDurations": {
+          "median": 0.088351732,
+          "average": 0.088351732
+        },
+        "durations": [
+          {
+            "duration": 0.088351732,
+            "location": "System_Directorybaseoperations.feature:74"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I copy the \"([^\"]*)\" folder to the \"([^\"]*)\" path$",
+    "steps": [
+      {
+        "name": "I copy the \"./Test\" folder to the \"./Test1\" path",
+        "aggregatedDurations": {
+          "median": 0.096604946,
+          "average": 0.096604946
+        },
+        "durations": [
+          {
+            "duration": 0.096604946,
+            "location": "System_Directorybaseoperations.feature:55"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I delete the \"([^\"]*)\" file$",
+    "steps": [
+      {
+        "name": "I delete the \"./Test.txt\" file",
+        "aggregatedDurations": {
+          "median": 0.000934756,
+          "average": 0.000747674
+        },
+        "durations": [
+          {
+            "duration": 0.001162927,
+            "location": "System_Filebaseoperations.feature:62"
+          },
+          {
+            "duration": 0.00014534,
+            "location": "System_Filebaseoperations.feature:64"
+          },
+          {
+            "duration": 0.000934756,
+            "location": "System_Filecontentbasicmanipulation.feature:92"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^(?:I should see |)the \"([^\"]*)\" folder is available$",
+    "steps": [
+      {
+        "name": "I should see the \"./Test\" folder is available",
+        "aggregatedDurations": {
+          "median": 0.000198174,
+          "average": 0.005163138
+        },
+        "durations": [
+          {
+            "duration": 0.020068612,
+            "location": "System_Directorybaseoperations.feature:22"
+          },
+          {
+            "duration": 0.00019381,
+            "location": "System_Directorybaseoperations.feature:30"
+          },
+          {
+            "duration": 0.000187593,
+            "location": "System_Directorybaseoperations.feature:39"
+          },
+          {
+            "duration": 0.000202539,
+            "location": "System_Directorybaseoperations.feature:56"
+          }
+        ]
+      },
+      {
+        "name": "I should see the \"./Test/test1/test2\" folder is available",
+        "aggregatedDurations": {
+          "median": 0.00018068,
+          "average": 0.00018068
+        },
+        "durations": [
+          {
+            "duration": 0.00018068,
+            "location": "System_Directorybaseoperations.feature:32"
+          }
+        ]
+      },
+      {
+        "name": "I should see the \"./Test/test1\" folder is available",
+        "aggregatedDurations": {
+          "median": 0.000142406,
+          "average": 0.000142406
+        },
+        "durations": [
+          {
+            "duration": 0.000150997,
+            "location": "System_Directorybaseoperations.feature:42"
+          },
+          {
+            "duration": 0.000133816,
+            "location": "System_Directorybaseoperations.feature:46"
+          }
+        ]
+      },
+      {
+        "name": "the \"./Test/test1/test2\" folder is available",
+        "aggregatedDurations": {
+          "median": 0.000127041,
+          "average": 0.000127041
+        },
+        "durations": [
+          {
+            "duration": 0.000127041,
+            "location": "System_Directorybaseoperations.feature:47"
+          }
+        ]
+      },
+      {
+        "name": "the \"./Test1/copyTest\" folder is available",
+        "aggregatedDurations": {
+          "median": 0.000193739,
+          "average": 0.000193739
+        },
+        "durations": [
+          {
+            "duration": 0.000221676,
+            "location": "System_Directorybaseoperations.feature:57"
+          },
+          {
+            "duration": 0.000165803,
+            "location": "System_Directorybaseoperations.feature:76"
+          }
+        ]
+      },
+      {
+        "name": "I should see the \"./Test/Test1/Test2\" folder is available",
+        "aggregatedDurations": {
+          "median": 0.000141498,
+          "average": 0.000141498
+        },
+        "durations": [
+          {
+            "duration": 0.000141498,
+            "location": "System_Directorybaseoperations.feature:64"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I create the \"([^\"]*)\" folder \\(with overwrite\\)$",
+    "steps": [
+      {
+        "name": "I create the \"./Test/test1\" folder (with overwrite)",
+        "aggregatedDurations": {
+          "median": 0.000813162,
+          "average": 0.000813162
+        },
+        "durations": [
+          {
+            "duration": 0.000813162,
+            "location": "System_Directorybaseoperations.feature:41"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I create the \"([^\"]*)\" file with overwriting$",
+    "steps": [
+      {
+        "name": "I create the \"./Test.txt\" file with overwriting",
+        "aggregatedDurations": {
+          "median": 0.001891931,
+          "average": 0.001891931
+        },
+        "durations": [
+          {
+            "duration": 0.001891931,
+            "location": "System_Filebaseoperations.feature:49"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I should see the \"([^\"]*)\" file is missing$",
+    "steps": [
+      {
+        "name": "I should see the \"./T@#%^^..\" file is missing",
+        "aggregatedDurations": {
+          "median": 0.000140451,
+          "average": 0.000140451
+        },
+        "durations": [
+          {
+            "duration": 0.000140451,
+            "location": "System_Filebaseoperations.feature:28"
+          }
+        ]
+      },
+      {
+        "name": "I should see the \"a:\\Test.txt\" file is missing",
+        "aggregatedDurations": {
+          "median": 0.000106089,
+          "average": 0.000106089
+        },
+        "durations": [
+          {
+            "duration": 0.000106089,
+            "location": "System_Filebaseoperations.feature:28"
+          }
+        ]
+      },
+      {
+        "name": "I should see the \"./Test.txt\" file is missing",
+        "aggregatedDurations": {
+          "median": 0.00014513,
+          "average": 0.00014513
+        },
+        "durations": [
+          {
+            "duration": 0.000156096,
+            "location": "System_Filebaseoperations.feature:63"
+          },
+          {
+            "duration": 0.000134165,
+            "location": "System_Filebaseoperations.feature:65"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^(?:I |)create the \"([^\"]*)\" folder$",
+    "steps": [
+      {
+        "name": "I create the \"./Test\" folder",
+        "aggregatedDurations": {
+          "median": 0.000842914,
+          "average": 0.000941786
+        },
+        "durations": [
+          {
+            "duration": 0.000842914,
+            "location": "System_Directorybaseoperations.feature:20"
+          },
+          {
+            "duration": 0.000794863,
+            "location": "System_Directorybaseoperations.feature:29"
+          },
+          {
+            "duration": 0.001187581,
+            "location": "System_Directorybaseoperations.feature:38"
+          }
+        ]
+      },
+      {
+        "name": "I create the \"./Test/test1/test2\" folder",
+        "aggregatedDurations": {
+          "median": 0.001392355,
+          "average": 0.001154453
+        },
+        "durations": [
+          {
+            "duration": 0.001939632,
+            "location": "System_Directorybaseoperations.feature:31"
+          },
+          {
+            "duration": 0.001392355,
+            "location": "System_Directorybaseoperations.feature:40"
+          },
+          {
+            "duration": 0.000131372,
+            "location": "System_Directorybaseoperations.feature:44"
+          }
+        ]
+      },
+      {
+        "name": "I create the \"./Test/copyTest\" folder",
+        "aggregatedDurations": {
+          "median": 0.001598877,
+          "average": 0.001598877
+        },
+        "durations": [
+          {
+            "duration": 0.00192322,
+            "location": "System_Directorybaseoperations.feature:54"
+          },
+          {
+            "duration": 0.001274534,
+            "location": "System_Directorybaseoperations.feature:73"
+          }
+        ]
+      },
+      {
+        "name": "I create the \"./Test/Test1/Test2\" folder",
+        "aggregatedDurations": {
+          "median": 0.03737996,
+          "average": 0.03737996
+        },
+        "durations": [
+          {
+            "duration": 0.03737996,
+            "location": "System_Directorybaseoperations.feature:63"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I should see the \"([^\"]*)\" file is available$",
+    "steps": [
+      {
+        "name": "I should see the \"./Test.txt\" file is available",
+        "aggregatedDurations": {
+          "median": 0.000241441,
+          "average": 0.000236994
+        },
+        "durations": [
+          {
+            "duration": 0.000241441,
+            "location": "System_Filebaseoperations.feature:28"
+          },
+          {
+            "duration": 0.00021141,
+            "location": "System_Filecontentbasicmanipulation.feature:27"
+          },
+          {
+            "duration": 0.000258133,
+            "location": "System_Filecontentbasicmanipulation.feature:42"
+          }
+        ]
+      },
+      {
+        "name": "I should see the \"./T e s t.txt\" file is available",
+        "aggregatedDurations": {
+          "median": 0.000161543,
+          "average": 0.000161543
+        },
+        "durations": [
+          {
+            "duration": 0.000161543,
+            "location": "System_Filebaseoperations.feature:28"
+          }
+        ]
+      },
+      {
+        "name": "I should see the \"./Test1/Test.txt\" file is available",
+        "aggregatedDurations": {
+          "median": 0.000200724,
+          "average": 0.000200724
+        },
+        "durations": [
+          {
+            "duration": 0.000200724,
+            "location": "System_Filebaseoperations.feature:28"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the \"([^\"]*)\" folder doesn\u0027t exist$",
+    "steps": [
+      {
+        "name": "the \"./Test\" folder doesn\u0027t exist",
+        "aggregatedDurations": {
+          "median": 0.002097124,
+          "average": 0.881081964
+        },
+        "durations": [
+          {
+            "duration": 5.278194295,
+            "location": "System_Directorybaseoperations.feature:18"
+          },
+          {
+            "duration": 0.000811556,
+            "location": "System_Directorybaseoperations.feature:28"
+          },
+          {
+            "duration": 0.002717384,
+            "location": "System_Directorybaseoperations.feature:37"
+          },
+          {
+            "duration": 0.003088451,
+            "location": "System_Directorybaseoperations.feature:52"
+          },
+          {
+            "duration": 0.001476864,
+            "location": "System_Directorybaseoperations.feature:62"
+          },
+          {
+            "duration": 0.000203238,
+            "location": "System_Directorybaseoperations.feature:71"
+          }
+        ]
+      },
+      {
+        "name": "the \"./Test1\" folder doesn\u0027t exist",
+        "aggregatedDurations": {
+          "median": 0.002321664,
+          "average": 0.001911067
+        },
+        "durations": [
+          {
+            "duration": 0.002570019,
+            "location": "System_Directorybaseoperations.feature:19"
+          },
+          {
+            "duration": 0.000146806,
+            "location": "System_Directorybaseoperations.feature:53"
+          },
+          {
+            "duration": 0.002073309,
+            "location": "System_Directorybaseoperations.feature:72"
+          },
+          {
+            "duration": 0.002854134,
+            "location": "System_Filebaseoperations.feature:26"
+          }
+        ]
+      },
+      {
+        "name": "the \"nop\" folder doesn\u0027t exist",
+        "aggregatedDurations": {
+          "median": 0.000227403,
+          "average": 0.000223876
+        },
+        "durations": [
+          {
+            "duration": 0.00018452,
+            "location": "System_Filebaseoperations.feature:26"
+          },
+          {
+            "duration": 0.000238648,
+            "location": "System_Filebaseoperations.feature:26"
+          },
+          {
+            "duration": 0.000216158,
+            "location": "System_Filebaseoperations.feature:26"
+          },
+          {
+            "duration": 0.000256178,
+            "location": "System_Filebaseoperations.feature:26"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the lines from (\\d+) of the \"([^\"]*)\" file are:$",
+    "steps": [
+      {
+        "name": "the lines from 2 of the \"./Test.txt\" file are:",
+        "aggregatedDurations": {
+          "median": 0.000512984,
+          "average": 0.000512984
+        },
+        "durations": [
+          {
+            "duration": 0.000512984,
+            "location": "System_Filecontentbasicmanipulation.feature:72"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^(?:I |)delete the \"([^\"]*)\" folder$",
+    "steps": [
+      {
+        "name": "delete the \"./Test1\" folder",
+        "aggregatedDurations": {
+          "median": 0.000508305,
+          "average": 0.000508305
+        },
+        "durations": [
+          {
+            "duration": 0.000508305,
+            "location": "System_Directorybaseoperations.feature:21"
+          }
+        ]
+      },
+      {
+        "name": "I delete the \"./Test\" folder",
+        "aggregatedDurations": {
+          "median": 0.004991207,
+          "average": 0.004991207
+        },
+        "durations": [
+          {
+            "duration": 0.004991207,
+            "location": "System_Directorybaseoperations.feature:65"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I fill the \"([^\"]*)\" file with the following lines:$",
+    "steps": [
+      {
+        "name": "I fill the \"./Test.txt\" file with the following lines:",
+        "aggregatedDurations": {
+          "median": 0.114505405,
+          "average": 0.114505405
+        },
+        "durations": [
+          {
+            "duration": 0.114505405,
+            "location": "System_Filebaseoperations.feature:42"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I append the \"([^\"]*)\" file with the following lines:$",
+    "steps": [
+      {
+        "name": "I append the \"./Test.txt\" file with the following lines:",
+        "aggregatedDurations": {
+          "median": 0.003910623,
+          "average": 0.003910623
+        },
+        "durations": [
+          {
+            "duration": 0.003910623,
+            "location": "System_Filecontentbasicmanipulation.feature:56"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^I should see the \"([^\"]*)\" file size is ([\\-0-9]+) bytes$",
+    "steps": [
+      {
+        "name": "I should see the \"./Test.txt\" file size is 0 bytes",
+        "aggregatedDurations": {
+          "median": 0.017614529,
+          "average": 0.017614529
+        },
+        "durations": [
+          {
+            "duration": 0.017614529,
+            "location": "System_Filebaseoperations.feature:50"
+          }
+        ]
+      },
+      {
+        "name": "I should see the \"./Test.txt\" file size is 11 bytes",
+        "aggregatedDurations": {
+          "median": 0.000285512,
+          "average": 0.000285512
+        },
+        "durations": [
+          {
+            "duration": 0.000285512,
+            "location": "System_Filecontentbasicmanipulation.feature:89"
+          }
+        ]
+      },
+      {
+        "name": "I should see the \"./Test.txt\" file size is 23 bytes",
+        "aggregatedDurations": {
+          "median": 0.000362127,
+          "average": 0.000362127
+        },
+        "durations": [
+          {
+            "duration": 0.000362127,
+            "location": "System_Filecontentbasicmanipulation.feature:91"
+          }
+        ]
+      },
+      {
+        "name": "I should see the \"./Test.txt\" file size is -1 bytes",
+        "aggregatedDurations": {
+          "median": 0.000235365,
+          "average": 0.000235365
+        },
+        "durations": [
+          {
+            "duration": 0.000235365,
+            "location": "System_Filecontentbasicmanipulation.feature:93"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "source": "^the last (\\d+) lines of the \"([^\"]*)\" file are:$",
+    "steps": [
+      {
+        "name": "the last 2 lines of the \"./Test.txt\" file are:",
+        "aggregatedDurations": {
+          "median": 0.000596794,
+          "average": 0.000596794
+        },
+        "durations": [
+          {
+            "duration": 0.000596794,
+            "location": "System_Filecontentbasicmanipulation.feature:68"
+          }
+        ]
+      }
+    ]
+  }
+]
