@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.doxia.siterenderer.Renderer;
@@ -159,6 +161,23 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         this.siteRenderer = siteRenderer;
     }
 
+    public SortedMap calculateStepsUsageCounts(CucumberStepSource[] sources){
+        SortedMap<Integer,Integer> map = new TreeMap<Integer,Integer>();
+        for(CucumberStepSource source:sources){
+            int stepsCount = source.getSteps().length;
+            if(!map.containsKey(stepsCount)){
+                map.put(stepsCount, 1);
+            }
+            else {
+                int prevNum = map.get(stepsCount);
+                prevNum++;
+                map.remove(stepsCount);
+                map.put(stepsCount, prevNum);
+            }
+        }
+        return map;
+    }
+    
     /**
      * .
      * @param sink .
