@@ -27,7 +27,8 @@ import com.cedarsoftware.util.io.JsonReader;
 
 /**
  * @author Myk Kolisnyk
- * 
+ * @goal cucumber-usage
+ * @phase site
  */
 public class CucumberUsageReportingPlugin extends AbstractMavenReport {
 
@@ -59,7 +60,7 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
      * @required
      * @readonly
      */
-    private String       jsonFile;
+    private String       jsonUsageFile;
 
     /*
      * (non-Javadoc)
@@ -123,18 +124,18 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
     }
 
     /**
-     * @return the jsonFile
+     * @return the jsonUsageFile
      */
-    public String getJsonFile() {
-        return jsonFile;
+    public String getJsonUsageFile() {
+        return jsonUsageFile;
     }
 
     /**
-     * @param jsonFile
-     *            the jsonFile to set
+     * @param jsonUsageFile
+     *            the jsonUsageFile to set
      */
-    public void setJsonFile(String jsonFile) {
-        this.jsonFile = jsonFile;
+    public void setJsonUsageFile(String jsonUsageFile) {
+        this.jsonUsageFile = jsonUsageFile;
     }
 
     /**
@@ -178,13 +179,94 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         return map;
     }
     
+    public double calculateStepsUsageAverage(SortedMap<Integer,Integer> statistics){
+        int totalSteps = 0;
+        int totalUniqueSteps = 0;
+        
+        for(int i:statistics.keySet()){
+            totalSteps += i*statistics.get(i);
+            totalUniqueSteps += statistics.get(i);
+        }
+        if(totalUniqueSteps==0){
+            totalUniqueSteps=1;
+        }
+        return (double)totalSteps/(double)totalUniqueSteps;
+    }
+    
+    public int calculateStepsUsageMedian(SortedMap<Integer,Integer> statistics){
+        int totalSteps = 0;
+        int usedSteps = 0;
+        int median = 0;
+        for(int i:statistics.keySet()){
+            totalSteps += statistics.get(i);
+        }
+        
+        for(int i:statistics.keySet()){
+            usedSteps += statistics.get(i);
+            if(usedSteps*2 >= totalSteps){
+                median=i;
+                break;
+            }
+        }
+        
+        return median;
+    }
+    
+    public int calculateStepsUsageMax(SortedMap<Integer,Integer> statistics){
+        int max=0;
+        for(int i:statistics.keySet()){
+            max = Math.max(max, statistics.get(i));
+        }
+        return max;
+    }
+    
     /**
      * .
      * @param sink .
      * @param sources .
      */
     protected void generateUsageOverviewGraphReport(Sink sink, CucumberStepSource[] sources){
-        ;
+        double hscale;
+        double vscale;
+        int hoffset = 20;
+        int voffset = 200;
+        int median;
+        double average;
+        
+        SortedMap<Integer,Integer> map = calculateStepsUsageCounts(sources);
+        hscale = 180./(double)map.lastKey();
+        vscale = 180./(double)calculateStepsUsageMax(map);
+        median = calculateStepsUsageMedian(map);
+        average = calculateStepsUsageAverage(map);
+        
+        String htmlContent = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"300\" height=\"300\">" +
+        		"<defs>" +
+        		"<filter id=\"f1\" x=\"0\" y=\"0\" width=\"200%\" height=\"200%\">" +
+        		"<feOffset result=\"offOut\" in=\"SourceAlpha\" dx=\"10\" dy=\"10\" />" +
+        		"<feGaussianBlur result=\"blurOut\" in=\"offOut\" stdDeviation=\"10\" />" +
+        		"<feBlend in=\"SourceGraphic\" in2=\"blurOut\" mode=\"normal\" />" +
+        		"</filter>" +
+        		"<radialGradient id=\"grad1\" cx=\"0%\" cy=\"100%\" r=\"150%\" fx=\"0%\" fy=\"100%\">" +
+        		"<stop offset=\"0%\" style=\"stop-color:white;stop-opacity:0.1\" />" +
+        		"<stop offset=\"100%\" style=\"stop-color:silver;stop-opacity:0.7\" />" +
+        		"</radialGradient>" +
+        		"</defs>" +
+        		"<rect width=\"90%\" height=\"90%\" stroke=\"black\" " +
+        		  "stroke-width=\"1\" fill=\"url(#grad1)\" filter=\"url(#f1)\" />" +
+        		"<line x1=\"20\" y1=\"10\" x2=\"20\" y2=\"200\" style=\"stroke:black;stroke-width:1\" />" +
+        		"<line x1=\"20\" y1=\"200\" x2=\"230\" y2=\"200\" style=\"stroke:black;stroke-width:1\" />" +
+        		"<polygon points=\"15,30 20,10 25,30\" style=\"fill:black;stroke:black;stroke-width:1\"/>" +
+        		"<polygon points=\"230,200 210,205 210,195\" style=\"fill:black;stroke:black;stroke-width:1\"/>" +
+        		"<polygon points=\"" + hoffset + "," + voffset;
+        for(int i:map.keySet()){
+            htmlContent += " " + (hoffset + (int)(i*hscale)) + "," + (voffset - (int)(map.get(i)*vscale));
+        }
+        htmlContent +=	" " + (hoffset + (int)(map.lastKey()*hscale)) + "," + voffset + 
+                "\" style=\"fill:green;stroke:black;stroke-width:1\"/>" +
+                "<line stroke-dasharray=\"10,10\" x1=\"" + (hoffset + median * hscale) + "\" y1=\"20\" x2=\"" + (hoffset + median * hscale) + "\" y2=\"200\" style=\"stroke:yellow;stroke-width:3\" />" +
+                "<line stroke-dasharray=\"10,10\" x1=\"" + (hoffset + (int)(average * hscale)) + "\" y1=\"20\" x2=\"" + (hoffset + (int)(average * hscale)) + "\" y2=\"200\" style=\"stroke:red;stroke-width:3\" />" +
+                "</svg>";
+        sink.rawText(htmlContent);
     }
     
     /**
@@ -193,7 +275,26 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
      * @param sources .
      */
     protected void generateUsageOverviewTableReport(Sink sink, CucumberStepSource[] sources){
-        ;
+        sink.table();
+        sink.tableRow();
+        sink.tableHeaderCell();
+        sink.text("Expression");
+        sink.tableHeaderCell_();
+        sink.tableHeaderCell();
+        sink.text("Occurences");
+        sink.tableHeaderCell_();
+        sink.tableRow_();
+        for(CucumberStepSource source:sources){
+            sink.tableRow();
+            sink.tableCell("80%");
+            sink.text(source.getSource());
+            sink.tableCell_();
+            sink.tableCell();
+            sink.text("" + source.getSteps().length);
+            sink.tableCell_();
+            sink.tableRow_();
+        }
+        sink.table_();
     }
     
     /**
@@ -244,7 +345,7 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
     protected void executeReport(Locale arg0) throws MavenReportException {
         try {
             
-            CucumberStepSource[] sources = getStepSources(jsonFile);
+            CucumberStepSource[] sources = getStepSources(jsonUsageFile);
             
             Sink sink = getSink();
             sink.head();
@@ -285,6 +386,8 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
             generateUsageDetailedReport(sink,sources);
             sink.paragraph_();
             sink.section1_();
+            sink.flush();
+            sink.close();
             
         } catch (Exception e) {
             throw new MavenReportException(
