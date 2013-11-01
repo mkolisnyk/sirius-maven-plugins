@@ -17,6 +17,7 @@ import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
 
 /**
+ * Generates Cucumber HTML detailed report based on execution results
  * @author Myk Kolisnyk
  * @goal cucumber
  * @phase site
@@ -26,7 +27,6 @@ public class CucumberReportingPlugin extends AbstractMavenReport {
 
     /**
      * Directory where reports will go.
-     *
      * @parameter expression="${project.reporting.outputDirectory}"
      * @required
      * @readonly
@@ -48,7 +48,7 @@ public class CucumberReportingPlugin extends AbstractMavenReport {
     private Renderer siteRenderer;
     
     /**
-     * @parameter
+     * @parameter expression="${project.cucumber.jsonfile}"
      * @required
      * @readonly
      */

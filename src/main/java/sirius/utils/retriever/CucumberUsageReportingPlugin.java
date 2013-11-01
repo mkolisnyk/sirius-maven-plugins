@@ -16,17 +16,23 @@ import java.util.TreeMap;
 import org.apache.maven.doxia.sink.Sink;
 import org.apache.maven.doxia.siterenderer.Renderer;
 import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
 
 import sirius.utils.retriever.types.usage.CucumberStep;
+import sirius.utils.retriever.types.usage.CucumberStepDuration;
 import sirius.utils.retriever.types.usage.CucumberStepSource;
 
 import com.cedarsoftware.util.io.JsonObject;
 import com.cedarsoftware.util.io.JsonReader;
 
 /**
+ * Generates HTML report based on Cucumber usage page. The input is the result of the site:cucumber 
+ * goal which is the part of this plugin
  * @author Myk Kolisnyk
  * @goal cucumber-usage
  * @phase site
@@ -34,8 +40,14 @@ import com.cedarsoftware.util.io.JsonReader;
 public class CucumberUsageReportingPlugin extends AbstractMavenReport {
 
     /**
-     * Directory where reports will go.
-     * 
+     * The path to the JSON usage file which is an input for the report generation
+     * @parameter expression="${project.reporting.jsonUsageFile}"
+     * @required
+     */
+    private String       jsonUsageFile;
+
+    /**
+     * The directory the output should be produced to.
      * @parameter expression="${project.reporting.outputDirectory}"
      * @required
      * @readonly
@@ -55,13 +67,6 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
      * @readonly
      */
     private Renderer     siteRenderer;
-
-    /**
-     * @parameter
-     * @required
-     * @readonly
-     */
-    private String       jsonUsageFile;
 
     /*
      * (non-Javadoc)
@@ -213,6 +218,25 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         return median;
     }
     
+    public int calculateTotalSteps(SortedMap<Integer,Integer> statistics){
+        int totalSteps = 0;
+
+        for(int i:statistics.keySet()){
+            totalSteps += i*statistics.get(i);
+        }
+        return totalSteps;
+    }
+ 
+    public int calculateUsedSteps(SortedMap<Integer,Integer> statistics){
+        int usedSteps = 0;
+        
+        for(int i:statistics.keySet()){
+            usedSteps += statistics.get(i);
+        }
+        
+        return usedSteps;
+    }
+    
     public int calculateStepsUsageMax(SortedMap<Integer,Integer> statistics){
         int max=0;
         for(int i:statistics.keySet()){
@@ -252,7 +276,7 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         median = calculateStepsUsageMedian(map);
         average = calculateStepsUsageAverage(map);
         
-        String htmlContent = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"" + hsize + "\" height=\"" + vsize + "\">" +
+        String htmlContent = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"" + (hsize+100) + "\" height=\"" + vsize + "\">" +
         		"<defs>" +
         		"<filter id=\"f1\" x=\"0\" y=\"0\" width=\"200%\" height=\"200%\">" +
         		"<feOffset result=\"offOut\" in=\"SourceAlpha\" dx=\"10\" dy=\"10\" />" +
@@ -295,8 +319,28 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
                     "<text x=\"" + (hstart - 5) + "\" y=\""+ (vend-(int)(i*vscale))+ "\" transform=\"rotate(-90 " + (hstart - 5) + ","+ (vend-(int)(i*vscale))+ ")\" font-size = \"8\">" + i + "</text>";    
         }
                 
+        float usage = 100.f * (1.f - ((float)calculateUsedSteps(map)/ (float)calculateTotalSteps(map)));
+        String statusColor = "silver";
+        
+        if(usage <= 30.f){
+            statusColor = "red";
+        }
+        else if(usage >= 70){
+            statusColor = "green";
+        }
+        else {
+            statusColor = "#BBBB00";
+        }
+        
         htmlContent += "<line stroke-dasharray=\"10,10\" x1=\"" + (hstart + median * hscale) + "\" y1=\"" + (vstart) + "\" x2=\"" + (hstart + median * hscale) + "\" y2=\"" + vend + "\" style=\"stroke:yellow;stroke-width:3\" />" +
                 "<line stroke-dasharray=\"10,10\" x1=\"" + (hstart + (int)(average * hscale)) + "\" y1=\"" + (vstart) + "\" x2=\"" + (hstart + (int)(average * hscale)) + "\" y2=\"" + vend + "\" style=\"stroke:red;stroke-width:3\" />" +
+                "<rect x=\"60%\" y=\"20%\" width=\"28%\" height=\"20%\" stroke=\"black\" stroke-width=\"1\" fill=\"white\" filter=\"url(#f1)\" />" +
+                "<line x1=\"63%\" y1=\"29%\" x2=\"68%\" y2=\"29%\" stroke-dasharray=\"5,5\" style=\"stroke:red;stroke-width:3\" /><text x=\"73%\" y=\"30%\" font-weight = \"bold\" font-size = \"12\">Average</text>" +
+                "<line x1=\"63%\" y1=\"34%\" x2=\"68%\" y2=\"34%\" stroke-dasharray=\"5,5\" style=\"stroke:yellow;stroke-width:3\" /><text x=\"73%\" y=\"35%\" font-weight = \"bold\" font-size = \"12\">Median</text>" +
+                "<text x=\"60%\" y=\"55%\" font-weight = \"bold\" font-size = \"40\" fill=\"" + statusColor + "\">" + String.format("%.1f", usage)+ "%</text>" +
+                "<text x=\"66%\" y=\"60%\" font-weight = \"bold\" font-size = \"16\" fill=\"" + statusColor + "\">Re-use</text>" +
+                "<text x=\"120\" y=\"330\" font-weight = \"bold\" font-size = \"14\" >Step re-use count</text>" +
+                "<text x=\"20\" y=\"220\" font-weight = \"bold\" font-size = \"14\" transform=\"rotate(-90 20,220)\">Steps count</text>" +
                 "</svg>";
         sink.rawText(htmlContent);
     }
@@ -336,38 +380,23 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
      * @param sources .
      */
     protected void generateUsageDetailedReport(Sink sink, CucumberStepSource[] sources){
-        sink.table();
-        sink.tableRow();
-        sink.tableHeaderCell();
-        sink.text("Expression");
-        sink.tableHeaderCell_();
-        sink.tableHeaderCell();
-        sink.text("Occurences");
-        sink.tableHeaderCell_();
-        sink.tableRow_();
         for(CucumberStepSource source:sources){
-            sink.tableRow();
-            sink.tableCell("80%");
+            sink.section3();
+            sink.sectionTitle3();
             sink.text(source.getSource());
-            sink.tableCell_();
-            sink.tableCell();
-            sink.text("" + source.getSteps().length);
-            sink.tableCell_();
-            sink.tableRow_();
-            sink.tableRow();
-            sink.tableCell();
-            sink.tableCell_();
-            sink.tableCell();
+            sink.sectionTitle3_();
+            sink.section3_();
+
             sink.table();
             sink.tableRow();
             sink.tableHeaderCell();
-            sink.text("Name");
+            sink.text("Step Name");
             sink.tableHeaderCell_();
             sink.tableHeaderCell();
-            sink.text("Average");
+            sink.text("Duration");
             sink.tableHeaderCell_();
             sink.tableHeaderCell();
-            sink.text("Median");
+            sink.text("Location");
             sink.tableHeaderCell_();
             sink.tableRow_();
             
@@ -377,19 +406,30 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
                 sink.text(step.getName());
                 sink.tableCell_();
                 sink.tableCell();
-                sink.text("" + step.getAggregatedDurations().getAverage());
+                //sink.text("" + step.getAggregatedDurations().getAverage());
+                sink.text("-");
                 sink.tableCell_();
                 sink.tableCell();
-                sink.text("" + step.getAggregatedDurations().getMedian());
+                //sink.text("" + step.getAggregatedDurations().getMedian());
+                sink.text("-");
                 sink.tableCell_();
                 sink.tableRow_();
+                for(CucumberStepDuration duration:step.getDurations()){
+                    sink.tableRow();
+                    sink.tableCell();
+                    sink.text("");
+                    sink.tableCell_();
+                    sink.tableCell();
+                    sink.text("" + duration.getDuration());
+                    sink.tableCell_();
+                    sink.tableCell();
+                    sink.text(duration.getLocation());
+                    sink.tableCell_();
+                    sink.tableRow_();
+                }
             }
-            
             sink.table_();
-            sink.tableCell_();
-            sink.tableRow_();
         }
-        sink.table_();
 
     }
     
