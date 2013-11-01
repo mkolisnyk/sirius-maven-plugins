@@ -1,8 +1,11 @@
 Introduction
 
   This plugin provides functionality to generate different reports like:
+  
   * Github Wiki Traceability Matrix - the report in GitHub wiki markdown format displaying correspondence between requirements (user stories/milestones) and associated issues (tickets)
+  
   * Maven formatted Traceability Matrix - the Maven reporting goal generating traceability matrix as the part of Maven <<site>> phase.
+  
   * Cucumber report - the extension of {{{https://github.com/masterthought/maven-cucumber-reporting-mojo}maven-cucumber-reporting-mojo}} plugin which generates Cucumber report as the part of Maven site generation 
 
 Author

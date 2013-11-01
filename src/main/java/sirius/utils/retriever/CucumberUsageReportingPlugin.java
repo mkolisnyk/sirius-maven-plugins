@@ -20,6 +20,7 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
 
+import sirius.utils.retriever.types.usage.CucumberStep;
 import sirius.utils.retriever.types.usage.CucumberStepSource;
 
 import com.cedarsoftware.util.io.JsonObject;
@@ -228,18 +229,30 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
     protected void generateUsageOverviewGraphReport(Sink sink, CucumberStepSource[] sources){
         double hscale;
         double vscale;
-        int hoffset = 20;
-        int voffset = 200;
+        int hsize = 400;
+        int vsize = 400;
+        int hstart = 40;
+        int vstart = 30;
+        int hend = 350;
+        int vend = 300;
+        
+        int hstep = 0;
+        int vstep=0;
+        
         int median;
         double average;
         
         SortedMap<Integer,Integer> map = calculateStepsUsageCounts(sources);
-        hscale = 180./(double)map.lastKey();
-        vscale = 180./(double)calculateStepsUsageMax(map);
+        hscale = (double)(hend-2*hstart)/((double)map.lastKey()+1);
+        vscale = (double)(vend-2*vstart)/((double)calculateStepsUsageMax(map)+1);
+        
+        hstep = (int)(30./hscale)+1;
+        vstep = (int)(30./vscale)+1;
+        
         median = calculateStepsUsageMedian(map);
         average = calculateStepsUsageAverage(map);
         
-        String htmlContent = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"300\" height=\"300\">" +
+        String htmlContent = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"" + hsize + "\" height=\"" + vsize + "\">" +
         		"<defs>" +
         		"<filter id=\"f1\" x=\"0\" y=\"0\" width=\"200%\" height=\"200%\">" +
         		"<feOffset result=\"offOut\" in=\"SourceAlpha\" dx=\"10\" dy=\"10\" />" +
@@ -248,23 +261,42 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         		"</filter>" +
         		"<radialGradient id=\"grad1\" cx=\"0%\" cy=\"100%\" r=\"150%\" fx=\"0%\" fy=\"100%\">" +
         		"<stop offset=\"0%\" style=\"stop-color:white;stop-opacity:0.1\" />" +
-        		"<stop offset=\"100%\" style=\"stop-color:silver;stop-opacity:0.7\" />" +
+        		"<stop offset=\"100%\" style=\"stop-color:gold;stop-opacity:0.7\" />" +
         		"</radialGradient>" +
+        	    "<linearGradient id=\"grad2\" cx=\"0%\" cy=\"100%\" r=\"150%\" fx=\"0%\" fy=\"100%\">" +
+                "<stop offset=\"0%\" style=\"stop-color:red;stop-opacity:0.7\" />" +
+                "<stop offset=\"50%\" style=\"stop-color:yellow;stop-opacity:0.7\" />" +
+                "<stop offset=\"100%\" style=\"stop-color:green;stop-opacity:0.7\" />" +
+                "</linearGradient>" +
         		"</defs>" +
         		"<rect width=\"90%\" height=\"90%\" stroke=\"black\" " +
         		  "stroke-width=\"1\" fill=\"url(#grad1)\" filter=\"url(#f1)\" />" +
-        		"<line x1=\"20\" y1=\"10\" x2=\"20\" y2=\"200\" style=\"stroke:black;stroke-width:1\" />" +
-        		"<line x1=\"20\" y1=\"200\" x2=\"230\" y2=\"200\" style=\"stroke:black;stroke-width:1\" />" +
-        		"<polygon points=\"15,30 20,10 25,30\" style=\"fill:black;stroke:black;stroke-width:1\"/>" +
-        		"<polygon points=\"230,200 210,205 210,195\" style=\"fill:black;stroke:black;stroke-width:1\"/>" +
-        		"<polygon points=\"" + hoffset + "," + voffset;
-        for(int i:map.keySet()){
-            htmlContent += " " + (hoffset + (int)(i*hscale)) + "," + (voffset - (int)(map.get(i)*vscale));
+        		"<line x1=\"" + (hstart) + "\" y1=\"" + (vstart) + "\" x2=\"" + (hstart) + "\" y2=\"" + (vend) + "\" style=\"stroke:black;stroke-width:1\" />" +
+        		"<line x1=\"" + (hstart) + "\" y1=\"" + (vend) + "\" x2=\"" + (hend) + "\" y2=\"" + (vend) + "\" style=\"stroke:black;stroke-width:1\" />" +
+        		"<polygon points=\""+ (hstart-5) +"," + (vstart+20) + " "+ (hstart) +"," + (vstart) + " "+ (hstart+5) +"," + (vstart+20) + "\" style=\"fill:black;stroke:black;stroke-width:1\"/>" +
+        		"<polygon points=\""+(hend)+"," + (vend) + " "+(hend-20)+"," + (vend+5) + " "+(hend-20)+"," + (vend-5) + "\" style=\"fill:black;stroke:black;stroke-width:1\"/>" +
+        		"<polygon points=\"" + hstart + "," + vend;
+        for(int i=0;i<=map.lastKey()+1;i++){
+            int value = 0;
+            if(map.containsKey(i)){
+                value = map.get(i);
+            }
+            htmlContent += " " + (hstart + (int)(i*hscale)) + "," + (vend - (int)(value*vscale));
         }
-        htmlContent +=	" " + (hoffset + (int)(map.lastKey()*hscale)) + "," + voffset + 
-                "\" style=\"fill:green;stroke:black;stroke-width:1\"/>" +
-                "<line stroke-dasharray=\"10,10\" x1=\"" + (hoffset + median * hscale) + "\" y1=\"20\" x2=\"" + (hoffset + median * hscale) + "\" y2=\"200\" style=\"stroke:yellow;stroke-width:3\" />" +
-                "<line stroke-dasharray=\"10,10\" x1=\"" + (hoffset + (int)(average * hscale)) + "\" y1=\"20\" x2=\"" + (hoffset + (int)(average * hscale)) + "\" y2=\"200\" style=\"stroke:red;stroke-width:3\" />" +
+        htmlContent +=  "\" style=\"stroke:black;stroke-width:1\"  fill=\"url(#grad2)\" />";
+        
+        for(int i=0;i<=map.lastKey();i+=hstep){
+            htmlContent += "<line x1=\"" + (hstart + (int)(i*hscale)) + "\" y1=\""+ (vend)+ "\" x2=\"" + (hstart + (int)(i*hscale)) + "\" y2=\""+ (vend+5)+ "\" style=\"stroke:black;stroke-width:1\" />" +
+                    "<text x=\"" + (hstart + (int)(i*hscale)) + "\" y=\""+ (vend+10)+ "\" font-size = \"8\">" + i + "</text>";    
+        }
+        
+        for(int i=0;i<=calculateStepsUsageMax(map);i+=vstep){
+            htmlContent += "<line x1=\"" + (hstart) + "\" y1=\""+ (vend-(int)(i*vscale))+ "\" x2=\"" + (hstart - 5) + "\" y2=\""+ (vend-(int)(i*vscale))+ "\" style=\"stroke:black;stroke-width:1\" />" +
+                    "<text x=\"" + (hstart - 5) + "\" y=\""+ (vend-(int)(i*vscale))+ "\" transform=\"rotate(-90 " + (hstart - 5) + ","+ (vend-(int)(i*vscale))+ ")\" font-size = \"8\">" + i + "</text>";    
+        }
+                
+        htmlContent += "<line stroke-dasharray=\"10,10\" x1=\"" + (hstart + median * hscale) + "\" y1=\"" + (vstart) + "\" x2=\"" + (hstart + median * hscale) + "\" y2=\"" + vend + "\" style=\"stroke:yellow;stroke-width:3\" />" +
+                "<line stroke-dasharray=\"10,10\" x1=\"" + (hstart + (int)(average * hscale)) + "\" y1=\"" + (vstart) + "\" x2=\"" + (hstart + (int)(average * hscale)) + "\" y2=\"" + vend + "\" style=\"stroke:red;stroke-width:3\" />" +
                 "</svg>";
         sink.rawText(htmlContent);
     }
@@ -275,6 +307,7 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
      * @param sources .
      */
     protected void generateUsageOverviewTableReport(Sink sink, CucumberStepSource[] sources){
+        
         sink.table();
         sink.tableRow();
         sink.tableHeaderCell();
@@ -303,7 +336,61 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
      * @param sources .
      */
     protected void generateUsageDetailedReport(Sink sink, CucumberStepSource[] sources){
-        ;
+        sink.table();
+        sink.tableRow();
+        sink.tableHeaderCell();
+        sink.text("Expression");
+        sink.tableHeaderCell_();
+        sink.tableHeaderCell();
+        sink.text("Occurences");
+        sink.tableHeaderCell_();
+        sink.tableRow_();
+        for(CucumberStepSource source:sources){
+            sink.tableRow();
+            sink.tableCell("80%");
+            sink.text(source.getSource());
+            sink.tableCell_();
+            sink.tableCell();
+            sink.text("" + source.getSteps().length);
+            sink.tableCell_();
+            sink.tableRow_();
+            sink.tableRow();
+            sink.tableCell();
+            sink.tableCell_();
+            sink.tableCell();
+            sink.table();
+            sink.tableRow();
+            sink.tableHeaderCell();
+            sink.text("Name");
+            sink.tableHeaderCell_();
+            sink.tableHeaderCell();
+            sink.text("Average");
+            sink.tableHeaderCell_();
+            sink.tableHeaderCell();
+            sink.text("Median");
+            sink.tableHeaderCell_();
+            sink.tableRow_();
+            
+            for(CucumberStep step:source.getSteps()){
+                sink.tableRow();
+                sink.tableCell();
+                sink.text(step.getName());
+                sink.tableCell_();
+                sink.tableCell();
+                sink.text("" + step.getAggregatedDurations().getAverage());
+                sink.tableCell_();
+                sink.tableCell();
+                sink.text("" + step.getAggregatedDurations().getMedian());
+                sink.tableCell_();
+                sink.tableRow_();
+            }
+            
+            sink.table_();
+            sink.tableCell_();
+            sink.tableRow_();
+        }
+        sink.table_();
+
     }
     
     public CucumberStepSource[] getStepSources(String filePath) throws Exception{
@@ -357,7 +444,7 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
             sink.body();
             sink.section1();
             sink.sectionTitle1();
-            sink.text("Usage Statistics");
+            sink.text("Cucumber Usage Statistics");
             sink.sectionTitle1_();
             
             sink.section2();
@@ -380,7 +467,7 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
 
             sink.section1();
             sink.sectionTitle1();
-            sink.text("Usage Detailed Information");
+            sink.text("Cucumber Usage Detailed Information");
             sink.sectionTitle1_();
             sink.paragraph();
             generateUsageDetailedReport(sink,sources);
