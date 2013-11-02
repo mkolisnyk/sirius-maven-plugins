@@ -64,10 +64,13 @@
                        <h5>Examples</h5>
                   <ul>
                   <li class="none">
-                          <a href="../examples/example1.html" title="description1">description1</a>
+            <strong>GitHub Traceability Matrix Example</strong>
+          </li>
+                  <li class="none">
+                          <a href="../examples/cucumber-report-example.html" title="Cucumber Report Example">Cucumber Report Example</a>
             </li>
                   <li class="none">
-                          <a href="../examples/example2.html" title="description2">description2</a>
+                          <a href="../examples/cucumber-usage-report-example.html" title="Cucumber Usage Report Example">Cucumber Usage Report Example</a>
             </li>
           </ul>
                        <h5>Project Documentation</h5>
@@ -89,7 +92,8 @@
     <div id="bodyColumn">
       <div id="contentBox">
         <div class="section"><h2>Overview<a name="Overview"></a></h2><p>The <b>site:generate</b> goal is targeted to generate different report types but mainly it is targeted to create traceability matrix report in the GitHub format. This report then can be exported to the GitHub Wiki pages and used as another testing documentation artifact. Sample traceability matrix report can be found <a class="externalLink" href="https://github.com/mkolisnyk/Sirius/wiki/Traceability-Matrix">here</a>.</p><p>Generally it scans the issue tracking system (currently it's GitHub issuer tracker) and finds all issues with specified labels. The output will contain the list of issues groupped by milestone they are assigned to with all references to the original resources.</p></div><div class="section"><h2>Parameters to specify<a name="Parameters_to_specify"></a></h2><p>In order to generate traceability matrix report we should specify the following options:</p><ul><li><b>repository</b> - the name of the GitHub repository to get data from (all data is taken from <a class="externalLink" href="https://github.com">https://github.com</a> site);</li><li><b>groups</b> - the list of labels assigned to the issues which can be used as the filter. Only issues containing these labels will appear in the final report;</li><li><b>outputType</b> - the type of formatted output. For GitHub traceability matrix it should be <b>trace</b>.</li><li><b>outputLocation</b> - the folder where generated report is saved to.</li><li><b>goal</b> - the Maven goal where this generation happens</li><li><b>user</b> - the user name to login to GitHub</li><li><b>password</b> - the password to use for authentication</li></ul></div><div class="section"><h2>Securing parameters<a name="Securing_parameters"></a></h2><p>As it's seen from the above section there is some information which is normally not shared. Mostly it's about GitHub user and password information. These parameters can also be defined via the following properties:</p><ul><li><b>issueget.user</b></li><li><b>issueget.password</b></li></ul><p>So, you can run Maven with the following options:</p><div><pre>mvn &lt;list of goals&gt; -Dissueget.user=&lt;GitHub user&gt; -Dissueget.password=&lt;GitHub password&gt;
-</pre></div><p>But normally it's inconvenient to explicitly specify the user credentials. In order to specify some default values you can modify <b>%MAVEN_HOME%/conf/settings.xml</b> file. The below example shows how to set default values for the default profile:</p><div><pre>        &lt;profile&gt;
+</pre></div><p>But normally it's inconvenient to explicitly specify the user credentials. In order to specify some default values you can modify <b>%MAVEN_HOME%/conf/settings.xml</b> file. The below example shows how to set default values for the default profile:</p><div><pre>  &lt;profiles&gt;
+        &lt;profile&gt;
                 &lt;id&gt;default&lt;/id&gt;
                 ....
                 &lt;properties&gt;
