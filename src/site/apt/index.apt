@@ -2,11 +2,13 @@ Introduction
 
   This plugin provides functionality to generate different reports like:
   
-  * Github Wiki Traceability Matrix - the report in GitHub wiki markdown format displaying correspondence between requirements (user stories/milestones) and associated issues (tickets)
+  * <<Github Wiki Traceability Matrix>> - the report in GitHub wiki markdown format displaying correspondence between requirements (user stories/milestones) and associated issues (tickets)
   
-  * Maven formatted Traceability Matrix - the Maven reporting goal generating traceability matrix as the part of Maven <<site>> phase.
+  * <<Maven formatted Traceability Matrix>> - the Maven reporting goal generating traceability matrix as the part of Maven <<site>> phase.
   
-  * Cucumber report - the extension of {{{https://github.com/masterthought/maven-cucumber-reporting-mojo}maven-cucumber-reporting-mojo}} plugin which generates Cucumber report as the part of Maven site generation 
+  * <<Cucumber report>> - the extension of {{{https://github.com/masterthought/maven-cucumber-reporting-mojo}maven-cucumber-reporting-mojo}} plugin which generates Cucumber report as the part of Maven site generation
+  
+  * <<Cucumber Usage report>> - uses artifacts of {{{https://github.com/masterthought/maven-cucumber-reporting-mojo}maven-cucumber-reporting-mojo}} plugin to generate Cucumber keywords usage information. It is used to analyze the effectiveness of using various Cucumber expressions 
 
 Author
 
@@ -54,19 +56,19 @@ Sirius-Maven-Plugins
   General instructions on how to use the Plugin Name can be found on the {{{usage.html}usage page}}. Some more
   specific use cases are described in the examples given below. Last but not least, users occasionally contribute
   additional examples, tips or errata to the
-  {{{http://docs.codehaus.org/display/MAVENUSER/Plugin+Name}plugin's wiki page}}.
+  {{{https://github.com/mkolisnyk/sirius-maven-plugins/wiki}plugin's wiki page}}.
  
-  In case you still have questions regarding the plugin's usage, please have a look at the {{{faq.html}FAQ}} and feel
-  free to contact the {{{mail-lists.html}user mailing list}}. The posts to the mailing list are archived and could
+  In case you still have questions regarding the plugin's usage, please have a look at the {{{/faq.html}FAQ}} and feel
+  free to contact the {{{/mail-lists.html}user mailing list}}. The posts to the mailing list are archived and could
   already contain the answer to your question as part of an older thread. Hence, it is also worth browsing/searching
-  the {{{mail-lists.html}mail archive}}.
+  the {{{/mail-lists.html}mail archive}}.
  
   If you feel like the plugin is missing a feature or has a defect, you can fill a feature request or bug report in our
-  {{{issue-tracking.html}issue tracker}}. When creating a new issue, please provide a comprehensive description of your
+  {{{/issue-tracking.html}issue tracker}}. When creating a new issue, please provide a comprehensive description of your
   concern. Especially for fixing bugs it is crucial that the developers can reproduce your problem. For this reason,
   entire debug logs, POMs or most preferably little demo projects attached to the issue are very much appreciated.
   Of course, patches are welcome, too. Contributors can check out the project from our
-  {{{source-repository.html}source repository}} and will find supplementary information in the
+  {{{/source-repository.html}source repository}} and will find supplementary information in the
   {{{http://maven.apache.org/guides/development/guide-helping.html}guide to helping with Maven}}. 
  
 * Examples
@@ -74,6 +76,10 @@ Sirius-Maven-Plugins
   To provide you with better understanding on some usages of the Plugin Name,
   you can take a look into the following examples:
  
-  * {{{examples/short-description1.html}Example Description One}}
+  * {{{examples/github-trace-matrix-example.html}Github Wiki Traceability Matrix Example}}
  
-  * {{{examples/short-description2.html}Example Description Two}}
+  * {{{examples/maven-trace-matrix-example.html}Maven Formatted Traceability Matrix Example}}
+  
+  * {{{examples/cucumber-report-example.html}Cucumber Report Example}}
+  
+  * {{{examples/cucumber-usage-report-example.html}Cucumber Usage Report Example}}

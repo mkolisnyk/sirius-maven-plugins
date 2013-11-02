@@ -1,0 +1,85 @@
+	------
+	Cucumber Usage Report Example
+	------
+	Myk Kolisnyk
+	------
+	2013-11-03
+
+Overview
+
+	This is an extension of the Cucumber which generates Maven site report based on Cucumber usage file. 
+
+Prerequisites
+
+	This report uses artifacts generated during Cucumber tests execution. So, in order to make this goal working you need:
+	
+	* Add goals performing Cucumber tests execution
+	
+	* Make your Cucumber tests producing JSON output
+
+  First point is done by adding the following dependencies:
+
+------
+	<dependencies>
+	    ....
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-picocontainer</artifactId>
+			<version>1.1.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.cukes</groupId>
+			<artifactId>cucumber-junit</artifactId>
+			<version>1.1.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		....
+	<dependencies>
+------
+
+  Second point is about configuring the test class itself. E.g. it should have annotations with the content like: 
+
+------
+@RunWith(Cucumber.class)
+@Cucumber.Options(
+        format = {"usage:target/cucumber-usage.json"}
+)
+public class SystemOperationsTest {
+}
+------
+
+  Once these settings are available the Cucumber report generation goal can be invoked.
+
+Generating Cucumber Report
+
+	The following example shows generation of the Cucumber results report:
+
+------
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>com.github.mkolisnyk</groupId>
+				<artifactId>sirius-maven-plugin</artifactId>
+				<version>1.1-SNAPSHOT</version>
+				<configuration>
+					<jsonFile>target/cucumber.json</jsonFile>
+				</configuration>
+				<reportSets>
+					<reportSet>
+						<configuration />
+						<reports>
+							<report>cucumber-usage</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
+------
