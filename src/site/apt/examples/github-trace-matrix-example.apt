@@ -45,13 +45,13 @@ Securing parameters
 	
   So, you can run Maven with the following options:
 	
-------
++------+
 mvn <list of goals> -Dissueget.user=<GitHub user> -Dissueget.password=<GitHub password>
-------
++------+
 
 	But normally it's inconvenient to explicitly specify the user credentials. In order to specify some default values you can modify <<%MAVEN_HOME%/conf/settings.xml>> file. The below example shows how to set default values for the default profile:
 	
-------
++------+
   <profiles>
 	<profile>
 		<id>default</id>
@@ -64,13 +64,13 @@ mvn <list of goals> -Dissueget.user=<GitHub user> -Dissueget.password=<GitHub pa
 		</properties>
 	</profile>
   </profiles>
-------
++------+
 
 Generating Traceability Matrix in GitHub Wiki format
 
 	The sample <<pom.xml>> fragment shows how to generate such report:
 	
-------
++------+
 	<build>
 		<plugin>
 			<groupId>com.github.mkolisnyk</groupId>
@@ -85,11 +85,11 @@ Generating Traceability Matrix in GitHub Wiki format
 			</configuration>
 		</plugin>
 	</build>
-------
++------+
 
 	So, in order to get this report generated you should run Maven command like:
 	
-------
++------+
 mvn sirius-maven-plugin:generate
-------
++------+
 

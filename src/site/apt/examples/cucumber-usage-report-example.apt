@@ -19,7 +19,7 @@ Prerequisites
 
   First point is done by adding the following dependencies:
 
-------
++------+
 	<dependencies>
 	    ....
 		<dependency>
@@ -42,18 +42,18 @@ Prerequisites
 		</dependency>
 		....
 	<dependencies>
-------
++------+
 
   Second point is about configuring the test class itself. E.g. it should have annotations with the content like: 
 
-------
++------+
 @RunWith(Cucumber.class)
 @Cucumber.Options(
         format = {"usage:target/cucumber-usage.json"}
 )
 public class SystemOperationsTest {
 }
-------
++------+
 
   Once these settings are available the Cucumber report generation goal can be invoked.
 
@@ -61,7 +61,7 @@ Generating Cucumber Report
 
 	The following example shows generation of the Cucumber results report:
 
-------
++------+
 	<reporting>
 		<plugins>
 			<plugin>
@@ -82,4 +82,4 @@ Generating Cucumber Report
 			</plugin>
 		</plugins>
 	</reporting>
-------
++------+
