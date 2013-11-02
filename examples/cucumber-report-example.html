@@ -91,7 +91,7 @@
     </div>
     <div id="bodyColumn">
       <div id="contentBox">
-        <div class="section"><h2>Overview<a name="Overview"></a></h2><p>The Cucumber Report generation is actually an extension of the existing plugin with the only one new feature: the final output </p></div><div class="section"><h2>Prerequisites<a name="Prerequisites"></a></h2><p>This report uses artifacts generated during Cucumber tests execution. So, in order to make this goal working you need:</p><ul><li>Add goals performing Cucumber tests execution</li><li>Make your Cucumber tests producing JSON output</li></ul><p>First point is done by adding the following dependencies:</p><div><pre>        &lt;dependencies&gt;
+        <div class="section"><h2>Overview<a name="Overview"></a></h2><p>The Cucumber Report generation is actually an extension of the existing plugin with the only one new feature: the final output </p></div><div class="section"><h2>Prerequisites<a name="Prerequisites"></a></h2><p>This report uses artifacts generated during Cucumber tests execution. So, in order to make this goal working you need:</p><ul><li>Add goals performing Cucumber tests execution</li><li>Make your Cucumber tests producing JSON output</li></ul><p>First point is done by adding the following dependencies:</p><div class="source"><pre>        &lt;dependencies&gt;
             ....
                 &lt;dependency&gt;
                         &lt;groupId&gt;info.cukes&lt;/groupId&gt;
@@ -112,12 +112,14 @@
                         &lt;scope&gt;test&lt;/scope&gt;
                 &lt;/dependency&gt;
                 ....
-        &lt;dependencies&gt;</pre></div><p>Second point is about configuring the test class itself. E.g. it should have annotations with the content like: </p><div><pre>@RunWith(Cucumber.class)
+        &lt;dependencies&gt;
+</pre></div><p>Second point is about configuring the test class itself. E.g. it should have annotations with the content like: </p><div class="source"><pre>@RunWith(Cucumber.class)
 @Cucumber.Options(
         format = {&quot;json:target/cucumber.json&quot;}
 )
 public class SystemOperationsTest {
-}</pre></div><p>Once these settings are available the Cucumber report generation goal can be invoked.</p></div><div class="section"><h2>Generating Cucumber Report<a name="Generating_Cucumber_Report"></a></h2><p>The following example shows generation of the Cucumber results report:</p><div><pre>        &lt;reporting&gt;
+}
+</pre></div><p>Once these settings are available the Cucumber report generation goal can be invoked.</p></div><div class="section"><h2>Generating Cucumber Report<a name="Generating_Cucumber_Report"></a></h2><p>The following example shows generation of the Cucumber results report:</p><div class="source"><pre>        &lt;reporting&gt;
                 &lt;plugins&gt;
                         &lt;plugin&gt;
                                 &lt;groupId&gt;com.github.mkolisnyk&lt;/groupId&gt;
@@ -136,7 +138,9 @@ public class SystemOperationsTest {
                                 &lt;/reportSets&gt;
                         &lt;/plugin&gt;
                 &lt;/plugins&gt;
-        &lt;/reporting&gt;</pre></div></div>
+        &lt;/reporting&gt;
+</pre></div><p>The final report will be generated if we invoke the following Maven command:</p><div class="source"><pre>mvn site:cucumber
+</pre></div></div>
       </div>
     </div>
     <div class="clear">
