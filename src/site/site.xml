@@ -31,6 +31,7 @@ under the License.
  
     <menu name="Examples">
       <item name="GitHub Traceability Matrix Example" href="examples/github-trace-matrix-example.html"/>
+      <item name="Maven Traceability Matrix Example" href="examples/maven-trace-matrix-example.html"/>
       <item name="Cucumber Report Example" href="examples/cucumber-report-example.html"/>
       <item name="Cucumber Usage Report Example" href="examples/cucumber-usage-report-example.html"/>
     </menu>

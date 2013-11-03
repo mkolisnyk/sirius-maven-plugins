@@ -1,3 +1,13 @@
+	------
+	Sirius Maven Plugins Overview
+	------
+	Myk Kolisnyk
+	------
+	2013-11-03
+
+
+%{toc}
+
 Introduction
 
   This plugin provides functionality to generate different reports like:
@@ -49,7 +59,16 @@ Sirius-Maven-Plugins
  
   General Information about the goals.
  
-  * {{{goal.html}prefix:goal}} short description for this plugin goal.
+  * {{{./cucumber-mojo.html}sirius:cucumber}}	Yes	Generates Cucumber HTML detailed report based on execution results
+  
+  * {{{./cucumber-usage-mojo.html}sirius:cucumber-usage}}	Yes	Generates HTML report based on Cucumber usage page. The input is the result of the site:cucumber goal which is the part of this plugin
+  
+  * {{{./generate-mojo.html}sirius:generate}}	No	Generates various output based on issues information in the GitHub. At the moment it has options to get the output in a form of Cucumber features or GitHub Wiki page with traceability matrix.
+  
+  * {{{./help-mojo.html}sirius:help}}	No	Display help information on sirius-maven-plugin.
+    Call mvn sirius:help -Ddetail=true -Dgoal=<goal-name> to display parameter details.
+    
+  * {{{./trace-mojo.html}sirius:trace}}	Yes	No description.
  
 * Usage
  

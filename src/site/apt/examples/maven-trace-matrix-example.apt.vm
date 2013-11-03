@@ -1,5 +1,5 @@
 	------
-	Github Traceability Matrix Example
+	Maven Traceability Matrix Example
 	------
 	Myk Kolisnyk
 	------
@@ -7,8 +7,8 @@
 
 Overview
 
-	The <<site:generate>> goal is targeted to generate different report types but mainly it is targeted to create traceability matrix report in the GitHub format.
-	This report then can be exported to the GitHub Wiki pages and used as another testing documentation artifact. Sample traceability matrix report can be found {{{https://github.com/mkolisnyk/Sirius/wiki/Traceability-Matrix}here}}.
+	The <<site:trace>> goal is targeted to generate traceability matrix report in the format compatible with Maven site.
+	This report will be shown among other project reports in the Maven site
 	
 	Generally it scans the issue tracking system (currently it's GitHub issuer tracker) and finds all issues with specified labels. 
 	The output will contain the list of issues groupped by milestone they are assigned to with all references to the original resources.
@@ -52,18 +52,18 @@ mvn <list of goals> -Dissueget.user=<GitHub user> -Dissueget.password=<GitHub pa
 	But normally it's inconvenient to explicitly specify the user credentials. In order to specify some default values you can modify <<%MAVEN_HOME%/conf/settings.xml>> file. The below example shows how to set default values for the default profile:
 	
 +------+
-  <profiles>
-	<profile>
-		<id>default</id>
-		....
-		<properties>
-			....
-			<issueget.user>my-login</issueget.user>
-			<issueget.password>my-user-password</issueget.password>
-			....
-		</properties>
-	</profile>
-  </profiles>
+<profiles>
+  <profile>
+    <id>default</id>
+    ....
+    <properties>
+      ....
+      <issueget.user>my-login</issueget.user>
+      <issueget.password>my-user-password</issueget.password>
+      ....
+    </properties>
+  </profile>
+</profiles>
 +------+
 
 Generating Traceability Matrix in GitHub Wiki format
@@ -71,25 +71,34 @@ Generating Traceability Matrix in GitHub Wiki format
 	The sample <<pom.xml>> fragment shows how to generate such report:
 	
 +------+
-	<build>
-		<plugin>
-			<groupId>com.github.mkolisnyk</groupId>
-			<artifactId>sirius-maven-plugin</artifactId>
-			<version>1.1-SNAPSHOT</version>
-			<configuration>
-				<repository>Sirius</repository>
-				<groups>System</groups>
-				<outputType>trace</outputType>
-				<outputLocation>target</outputLocation>
-				<goal>generate</goal>
-			</configuration>
-		</plugin>
-	</build>
+<reporting>
+  <plugins>
+    <plugin>
+      <groupId>com.github.mkolisnyk</groupId>
+      <artifactId>sirius-maven-plugin</artifactId>
+      <version>${project.version}</version>
+      <configuration>
+        <repository>Sirius</repository>
+        <groups>System</groups>
+        <outputType>mvn-trace</outputType>
+        <outputLocation>target/site</outputLocation>
+      </configuration>
+      <reportSets>
+        <reportSet>
+          <configuration />
+          <reports>
+            <report>trace</report>
+          </reports>
+        </reportSet>
+      </reportSets>
+    </plugin>
+  </plugins>
+</reporting>
 +------+
 
 	So, in order to get this report generated you should run Maven command like:
 	
 +------+
-mvn sirius-maven-plugin:generate
+mvn sirius-maven-plugin:trace
 +------+
 

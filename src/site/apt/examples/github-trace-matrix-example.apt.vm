@@ -1,0 +1,95 @@
+	------
+	Github Traceability Matrix Example
+	------
+	Myk Kolisnyk
+	------
+	2013-11-03
+
+Overview
+
+	The <<site:generate>> goal is targeted to generate different report types but mainly it is targeted to create traceability matrix report in the GitHub format.
+	This report then can be exported to the GitHub Wiki pages and used as another testing documentation artifact. Sample traceability matrix report can be found {{{https://github.com/mkolisnyk/Sirius/wiki/Traceability-Matrix}here}}.
+	
+	Generally it scans the issue tracking system (currently it's GitHub issuer tracker) and finds all issues with specified labels. 
+	The output will contain the list of issues groupped by milestone they are assigned to with all references to the original resources.
+
+Parameters to specify
+
+	In order to generate traceability matrix report we should specify the following options:
+	
+	* <<repository>> - the name of the GitHub repository to get data from (all data is taken from {{{https://github.com}https://github.com}} site);
+	
+	* <<groups>> - the list of labels assigned to the issues which can be used as the filter. Only issues containing these labels will appear in the final report;
+	
+	* <<outputType>> - the type of formatted output. For GitHub traceability matrix it should be <<trace>>.
+	
+	* <<outputLocation>> - the folder where generated report is saved to.
+	
+	* <<goal>> - the Maven goal where this generation happens
+	
+	* <<user>> - the user name to login to GitHub
+	
+	* <<password>> - the password to use for authentication
+	
+	
+Securing parameters
+
+	As it's seen from the above section there is some information which is normally not shared. Mostly it's about GitHub user and password information.
+	These parameters can also be defined via the following properties:
+	
+	* <<issueget.user>>
+	
+	* <<issueget.password>>
+	
+	
+	
+  So, you can run Maven with the following options:
+	
++------+
+mvn <list of goals> -Dissueget.user=<GitHub user> -Dissueget.password=<GitHub password>
++------+
+
+	But normally it's inconvenient to explicitly specify the user credentials. In order to specify some default values you can modify <<%MAVEN_HOME%/conf/settings.xml>> file. The below example shows how to set default values for the default profile:
+	
++------+
+  <profiles>
+	<profile>
+		<id>default</id>
+		....
+		<properties>
+			....
+			<issueget.user>my-login</issueget.user>
+			<issueget.password>my-user-password</issueget.password>
+			....
+		</properties>
+	</profile>
+  </profiles>
++------+
+
+Generating Traceability Matrix in GitHub Wiki format
+
+	The sample <<pom.xml>> fragment shows how to generate such report:
+	
++------+
+	<build>
+		<plugin>
+			<groupId>com.github.mkolisnyk</groupId>
+			<artifactId>sirius-maven-plugin</artifactId>
+			<version>${project.version}</version>
+			<configuration>
+				<repository>Sirius</repository>
+				<groups>System</groups>
+				<outputType>trace</outputType>
+				<outputLocation>target</outputLocation>
+				<goal>generate</goal>
+			</configuration>
+		</plugin>
+	</build>
++------+
+
+	So, in order to get this report generated you should run Maven command like:
+	
++------+
+mvn sirius-maven-plugin:generate
++------+
+

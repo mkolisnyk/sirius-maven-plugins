@@ -67,7 +67,7 @@ Generating Cucumber Report
 			<plugin>
 				<groupId>com.github.mkolisnyk</groupId>
 				<artifactId>sirius-maven-plugin</artifactId>
-				<version>1.1-SNAPSHOT</version>
+				<version>${project.version}</version>
 				<configuration>
 					<jsonFile>target/cucumber.json</jsonFile>
 				</configuration>
@@ -83,3 +83,10 @@ Generating Cucumber Report
 		</plugins>
 	</reporting>
 +------+
+
+	The final report will be generated if we invoke the following Maven command:
+	
++------+
+mvn site:cucumber-usage
++------+
+
