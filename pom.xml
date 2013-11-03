@@ -4,7 +4,7 @@
 	<artifactId>sirius-maven-plugin</artifactId>
 	<name>sirius-maven-plugin</name>
 
-	<version>1.1</version>
+	<version>1.2-SNAPSHOT</version>
 	<packaging>maven-plugin</packaging>
 
 	<licenses>
@@ -32,7 +32,7 @@
 		<connection>scm:git:https://github.com/mkolisnyk/sirius-maven-plugins.git</connection>
 		<developerConnection>scm:git:https://github.com/mkolisnyk/sirius-maven-plugins.git</developerConnection>
 		<url>https://github.com/mkolisnyk/sirius-maven-plugins.git</url>
-		<tag>v1.1</tag>
+		<tag>v1.0</tag>
 	</scm>
 	<issueManagement>
 		<system>GitHub</system>
