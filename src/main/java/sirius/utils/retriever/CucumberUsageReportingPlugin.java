@@ -171,7 +171,12 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
     public SortedMap calculateStepsUsageCounts(CucumberStepSource[] sources){
         SortedMap<Integer,Integer> map = new TreeMap<Integer,Integer>();
         for(CucumberStepSource source:sources){
-            int stepsCount = source.getSteps().length;
+            int stepsCount = 0;//source.getSteps().length;
+            
+            for(CucumberStep step:source.getSteps()){
+                stepsCount += step.getDurations().length;
+            }
+            
             if(!map.containsKey(stepsCount)){
                 map.put(stepsCount, 1);
             }
@@ -367,7 +372,11 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
             sink.text(source.getSource());
             sink.tableCell_();
             sink.tableCell();
-            sink.text("" + source.getSteps().length);
+            int totalSteps = 0;
+            for(CucumberStep step:source.getSteps()){
+                totalSteps += step.getDurations().length;
+            }
+            sink.text("" + totalSteps);
             sink.tableCell_();
             sink.tableRow_();
         }
