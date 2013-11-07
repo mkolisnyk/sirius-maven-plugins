@@ -1,6 +1,15 @@
 Changelog for sirius-maven-plugin version
-						1.1-SNAPSHOT
+						1.2-SNAPSHOT
 
+2013-11-07 23:51:08 +0000    Cucumber Usage Report Plugin: Overview table was updated with table
+sorting (mkolisnyk)
+2013-11-03 21:05:19 +0000    Cucumber Usage statistics calculation was changed (mkolisnyk)
+2013-11-03 14:20:55 +0000    #42[ci skip]prepare for next development iteration
+ (mkolisnyk)
+
+v1.1
+2013-11-03 14:20:29 +0000    #42[ci skip]prepare release v1.1
+ (mkolisnyk)
 2013-11-03 13:46:29 +0000    Maven documentation updates (mkolisnyk)
 2013-11-02 16:41:03 +0000    Documentation updates: links were corrected (mkolisnyk)
 2013-11-02 16:25:44 +0000    General documentation update. Samples pages were added (mkolisnyk)
