@@ -5,10 +5,12 @@ package sirius.utils.retriever.test;
 
 import static org.junit.Assert.*;
 
+import java.util.LinkedHashMap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 
@@ -25,7 +27,7 @@ public class CucumberUsageReportingPluginTest {
      * Test method for {@link sirius.utils.retriever.CucumberUsageReportingPlugin#getStepSources(java.lang.String)}.
      * @throws Exception 
      */
-    @Test
+    /*@Test
     public void testGetStepSources() throws Exception {
         CucumberUsageReportingPlugin plugin = new CucumberUsageReportingPlugin();
         System.out.println("Before getting data");
@@ -71,5 +73,13 @@ public class CucumberUsageReportingPluginTest {
         SortedMap<Integer,Integer> map = plugin.calculateStepsUsageCounts(sources);
         int median = plugin.calculateStepsUsageMedian(map);
         Assert.assertEquals(1, median);
+    }*/
+    
+    @Test
+    public void testCalculateStepsUsage() throws Exception {
+        CucumberUsageReportingPlugin plugin = new CucumberUsageReportingPlugin();
+        CucumberStepSource[] sources = plugin.getStepSources("src/test/resources/cucumber-usage.json");
+        LinkedHashMap<String,Integer> map = plugin.calculateStepsUsageScore(sources);
+        Assert.assertNotNull(map.get(map.keySet().iterator().next()));
     }
 }

@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -23,6 +26,7 @@ import org.apache.maven.project.MavenProject;
 import org.apache.maven.reporting.AbstractMavenReport;
 import org.apache.maven.reporting.MavenReportException;
 
+import sirius.utils.helpers.MapUtils;
 import sirius.utils.retriever.types.usage.CucumberStep;
 import sirius.utils.retriever.types.usage.CucumberStepDuration;
 import sirius.utils.retriever.types.usage.CucumberStepSource;
@@ -168,6 +172,22 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         this.siteRenderer = siteRenderer;
     }
 
+    public LinkedHashMap<String,Integer> calculateStepsUsageScore(CucumberStepSource[] sources){
+        LinkedHashMap<String,Integer> map = new LinkedHashMap<String,Integer>();
+        
+        for(CucumberStepSource source:sources){
+            int totalSteps = 0;
+            for(CucumberStep step:source.getSteps()){
+                totalSteps += step.getDurations().length;
+            }
+            map.put(source.getSource(), totalSteps);
+        }
+        
+        map = (LinkedHashMap<String,Integer>)MapUtils.sortByValue(map);
+        
+        return map;
+    }
+    
     public SortedMap calculateStepsUsageCounts(CucumberStepSource[] sources){
         SortedMap<Integer,Integer> map = new TreeMap<Integer,Integer>();
         for(CucumberStepSource source:sources){
@@ -356,6 +376,7 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
      * @param sources .
      */
     protected void generateUsageOverviewTableReport(Sink sink, CucumberStepSource[] sources){
+        LinkedHashMap<String,Integer> map = calculateStepsUsageScore(sources);
         
         sink.table();
         sink.tableRow();
@@ -366,6 +387,18 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
         sink.text("Occurences");
         sink.tableHeaderCell_();
         sink.tableRow_();
+        
+        for(String key:map.keySet()){
+            sink.tableRow();
+            sink.tableCell("80%");
+            sink.text(key);
+            sink.tableCell_();
+            sink.tableCell();
+            sink.text(""+map.get(key));
+            sink.tableCell_();
+            sink.tableRow_();
+        }
+        /*
         for(CucumberStepSource source:sources){
             sink.tableRow();
             sink.tableCell("80%");
@@ -379,7 +412,7 @@ public class CucumberUsageReportingPlugin extends AbstractMavenReport {
             sink.text("" + totalSteps);
             sink.tableCell_();
             sink.tableRow_();
-        }
+        }*/
         sink.table_();
     }
     
